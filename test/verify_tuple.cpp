@@ -1,22 +1,36 @@
+#include <iostream>
 #include "catch.hpp"
 
-#include "glm/vec4.hpp"
+#include "glm/glm.hpp"
 #include "tracer/geometry.hpp" //Include the geometry file
 
-TEST_CASE("Points Generate Correctly", "[point]") 
+SCENARIO("Vector Math", "[vectorOps]") 
 {
-    glm::vec4 test_point = point(1.0, 1.5, 2.0);
-    REQUIRE(test_point.x == 1.0);
-    REQUIRE(test_point.y == 1.5);
-    REQUIRE(test_point.z == 2.0);
-    REQUIRE(test_point.w == 1.0);
-}
-
-TEST_CASE("Vectors Generate Correctly", "[vect]")
-{
-    glm::vec4 test_vector = vector(1.0, 1.5, 2.0);
-    REQUIRE(test_vector.x == 1.0);
-    REQUIRE(test_vector.y == 1.5);
-    REQUIRE(test_vector.z == 2.0);
-    REQUIRE(test_vector.w == 0.0);
+    GIVEN("Have 2 points and two vectors")
+    {
+        glm::vec4 pointA = point(1.0, 1.0, 1.0);
+        glm::vec4 pointB = point(2, 3, 4);
+        glm::vec4 vecA = vector(1, 1, 1);
+        glm::vec4 vecB = vector(2, 3, 4);
+        REQUIRE(pointA.w == 1);
+        REQUIRE(pointB.w == 1); // Assert that points have a w of 1
+        REQUIRE(vecA.w == 0);
+        REQUIRE(vecB.w == 0); // Assert vectors have a w of 0
+        WHEN("A vector is compared to itself")
+        {
+            bool vector_equal = glm::all(glm::equal(vecA, vecA));
+            THEN("The vector equality is true ")
+            {
+                REQUIRE(vector_equal);
+            }
+        }
+        WHEN("Two vectors are added")
+        {
+            glm::vec4 sum = vecA + vecB;
+            THEN("The result is a Vector ")
+            {
+                REQUIRE(sum.w == 0);
+            }
+        }
+    }
 }
