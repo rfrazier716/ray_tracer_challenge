@@ -11,9 +11,22 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 add_executable (tracer "src/tracer.cpp")
 
 # Adding Libraries
-add_library(log "src/log.cpp")
+add_library(logger "src/log.cpp")
+add_library(geometry "src/geometry.cpp")
 
 # Linking Libraries
-target_link_libraries(tracer log)
+target_link_libraries(tracer logger)
 
-# TODO: Add tests and install targets if needed.
+# test settings
+enable_testing()
+
+add_library(Catch INTERFACE)
+target_include_directories(Catch INTERFACE "test")
+add_library(catch_main "test/catch_main.cpp")
+
+
+add_executable(tuple_test "test/verify_tuple.cpp")
+target_link_libraries(tuple_test Catch geometry catch_main)
+
+enable_testing()
+add_test(NAME Tuples COMMAND tuple_test)

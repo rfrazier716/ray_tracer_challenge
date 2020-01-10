@@ -1,4 +1,4 @@
-#include "tracer/log.h"
+#include "tracer/log.hpp"
 #include "glm/vec2.hpp"
 
 void main()

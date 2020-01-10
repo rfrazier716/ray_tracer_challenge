@@ -1,5 +1,5 @@
 #include <iostream>
-#include "tracer/log.h"
+#include "tracer/log.hpp"
 
 void log(const char* message)
 {
