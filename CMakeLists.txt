@@ -26,7 +26,7 @@ add_library(catch_main "test/catch_main.cpp")
 
 
 add_executable(tuple_test "test/verify_tuple.cpp")
-target_link_libraries(tuple_test Catch geometry catch_main)
+target_link_libraries(tuple_test Catch catch_main)
 
 enable_testing()
 add_test(NAME Tuples COMMAND tuple_test)
