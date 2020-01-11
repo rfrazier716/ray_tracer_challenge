@@ -30,6 +30,12 @@ int main(void)
         std::cout << "Error!" << std::endl;
     }
 
+    // Generate buffer
+    // OpenGL works as a state machine!!!
+    unsigned int buffer;
+    glGenBuffers(1, &buffer); //assigns the value of buffer to a buffer number
+    glBindBuffer(GL_ARRAY_BUFFER, buffer); // bind it to an array buffer
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {

@@ -7,20 +7,6 @@ include_directories ("include")	# standard include directory
 include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math library
 
 
-# GLFW Library
-include_directories ("lib/GLFW-3.3.1/Include") # directory for GLFW precompiled library
-find_library(LIB_GLFW glfw3 HINTS "lib/GLFW-3.3.1/")
-
-
-# GLEW Library
-add_compile_definitions(GLEW_STATIC)
-include_directories ("lib/GLEW-2.1.0/Include") # directory for GLFW precompiled library
-find_library(LIB_GLEW glew32s HINTS "lib/GLEW-2.1.0/")
-
-
-#OPENGL Library
-find_library(LIB_OPENGL opengl32)
-
 # Add source to this project's executable.
 add_executable (tracer "src/tracer.cpp")
 
@@ -32,9 +18,11 @@ add_library(geometry "src/geometry.cpp")
 target_link_libraries(tracer logger)
 
 
-# test file for OpenGL
-add_executable(opengl_test "test/openGL_test.cpp")
-target_link_libraries(opengl_test ${LIB_GLFW} ${LIB_OPENGL} ${LIB_GLEW})
+# ---Building Examples ---
+
+# Projectile motion example
+add_executable(projectile_motion "examples/projectile_motion.cpp")
+
 
 # test settings
 enable_testing()
