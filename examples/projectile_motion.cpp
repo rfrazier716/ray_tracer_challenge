@@ -44,7 +44,10 @@ int main()
 	std::cout << "initial position of cannonball" << GlmVectorString(cannonball->position) << std::endl;
 	cannonball->time_tick(); // advance the timestep
 	//loop until cannonball intersects ground
-	std::cout << cannonball->position.y;
+	std::cout << sizeof(glm::vec4)<<std::endl;
+	std::cout << sizeof(glm::vec4 *) << std::endl;
+	std::cout << sizeof(cannonball) << std::endl;
+	std::cout << sizeof(projectile) << std::endl;
 	while (cannonball->position.y >= 0)
 	{
 		cannonball->time_tick();
