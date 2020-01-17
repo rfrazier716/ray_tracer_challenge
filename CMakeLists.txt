@@ -22,6 +22,7 @@ target_link_libraries(tracer logger)
 
 # Projectile motion example
 add_executable(projectile_motion "examples/projectile_motion.cpp")
+add_library(canvas "src/canvas.cpp")
 
 
 # test settings
