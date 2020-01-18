@@ -2,7 +2,11 @@
 cmake_minimum_required (VERSION 3.12)
 project ("rayTracer")
 
-#Variables
+# set to cpp 17 standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Variables
 set(TEST_BIN_DIR "${CMAKE_BINARY_DIR}/tests")
 set(EXAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/examples")
 
@@ -29,8 +33,8 @@ target_link_libraries(tracer logger)
 # ---Building Examples ---
 
 # Projectile motion example
-add_executable(projectileMotion "examples/projectile_motion.cpp")
-set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY EXAMPLE_BIN_DIRECTORY)
+add_executable(projectileMotion "src/examples/projectile_motion.cpp")
+set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 
 # ---Tests---
@@ -43,12 +47,12 @@ add_library(catch_main "test/catch_main.cpp")
 
 # Tuple/GLM Test
 add_executable(testTuple "test/verify_tuple.cpp")
-set_target_properties(testTuple PROPERTIES RUNTIME_OUTPUT_DIRECTORY TEST_BIN_DIRECTORY)
+set_target_properties(testTuple PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
 target_link_libraries(testTuple Catch catch_main)
 
 # Canvas Test
 add_executable(testCanvas "test/testCanvas.cpp")
-set_target_properties(testCanvas PROPERTIES RUNTIME_OUTPUT_DIRECTORY TEST_BIN_DIRECTORY)
+set_target_properties(testCanvas PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
 target_link_libraries(testCanvas Catch catch_main canvas)
 
 

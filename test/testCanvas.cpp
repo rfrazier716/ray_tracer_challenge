@@ -2,11 +2,9 @@
 #include "catch.hpp"
 #include "glm/glm.hpp"
 #include "tracer/canvas.hpp"
+#include "tracer/colors.hpp"
 
-#define COLOR glm::ivec3
-#define RED COLOR(1,0,0)
-#define GREEN COLOR(0,1,0)
-#define BLUE COLOR(0,0,1)
+
 
 SCENARIO("Creating a Canvas", "[canvas]")
 {
@@ -24,7 +22,7 @@ SCENARIO("Creating a Canvas", "[canvas]")
                 {
                     for (int h = 0; h < canvas->height; h++)
                     {
-                        if (!glm::all(glm::equal(canvas->getPixel(h, w), glm::ivec3(0, 0, 0))))
+                        if (!glm::all(glm::equal(canvas->getPixel(h, w), BLACK)))
                         {
                             allCellsZero = false;
                         }
