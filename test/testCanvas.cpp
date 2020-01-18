@@ -63,3 +63,24 @@ SCENARIO("Writing to Canvas", "[canvas]")
         }
     }
 }
+
+SCENARIO("Exporting the Canvas", "[canavas]")
+{
+    GIVEN("Creating a new 5x3 canvas and defining colors")
+    {
+        std::shared_ptr<Canvas> canvas = std::make_shared<Canvas>(5,3); // make a new canvas
+        auto c1 = COLOR(1.5, 0, 0);
+        auto c2 = COLOR(0, 0.5, 0);
+        auto c3 = COLOR(-0.5, 0, 1.);
+        WHEN("We write to the canvas")
+        {
+            canvas->writePixel(0, 0, c1);
+            canvas->writePixel(2, 1, c2);
+            canvas->writePixel(4, 2, c3);
+            THEN("The ppm file exports correctly")
+            {
+                REQUIRE(canvas->generateImage() == 0);
+            }
+        }
+    }
+}
