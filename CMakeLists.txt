@@ -6,6 +6,9 @@ project ("rayTracer")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Enable Optimizations
+string(REPLACE "/O2" "/Od" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+
 # Variables
 set(TEST_BIN_DIR "${CMAKE_BINARY_DIR}/tests")
 set(EXAMPLE_BIN_DIR "${CMAKE_BINARY_DIR}/examples")
@@ -34,6 +37,7 @@ target_link_libraries(tracer logger)
 
 # Projectile motion example
 add_executable(projectileMotion "src/examples/projectile_motion.cpp")
+target_link_libraries(projectileMotion canvas)
 set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 

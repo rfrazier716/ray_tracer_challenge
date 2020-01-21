@@ -22,7 +22,7 @@ SCENARIO("Creating a Canvas", "[canvas]")
                 {
                     for (int h = 0; h < canvas->height; h++)
                     {
-                        if (!glm::all(glm::equal(canvas->getPixel(h, w), BLACK)))
+                        if (!glm::all(glm::equal(canvas->getPixel(w,h), BLACK)))
                         {
                             allCellsZero = false;
                         }
@@ -77,9 +77,10 @@ SCENARIO("Exporting the Canvas", "[canavas]")
             canvas->writePixel(0, 0, c1);
             canvas->writePixel(2, 1, c2);
             canvas->writePixel(4, 2, c3);
-            THEN("The ppm file exports correctly")
+            THEN("The files export correctly")
             {
-                REQUIRE(canvas->generateImage() == 0);
+                //REQUIRE(canvas->generateImage(ppm) == 0);
+                REQUIRE(canvas->generateImage(bmp) == 0);
             }
         }
     }
