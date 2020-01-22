@@ -129,6 +129,7 @@ int Canvas::exportBMP()
 		BMPINFOHEADER infoHeader(width, height); //The Info Header file for BMP Images
 		int bytesPerPixel = infoHeader.biBitCount / 8; //will nominally be 3 for 24 bit data
 		int paddingSize = 4-((bytesPerPixel * width) % 4); //this is how many padding bytes we have to write at the end of each row to make it a multiple of 4
+		paddingSize = paddingSize == 4 ? 0 : paddingSize; //if the padding size is 4 it should actually be zero
 		char* paddingArray = new char[paddingSize]; //make a new padding array on the heap
 		for (int j = 0; j < paddingSize; j++) paddingArray[j] = '\0'; //Set it's values to 0x00
 

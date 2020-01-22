@@ -8,6 +8,17 @@
 #define BMP_STDHEADERSIZE 7 // the standard header is 7 words long (14 bytes)
 #define BMP_INFOHEADERSIZE 20 // the info header is 20 words long (40 bytes)
 
+#define COLORBYTES 3 //How many bytes each pixel takes up
+
+inline DWORD BMPImageSizeBytes(int width, int height,int colorDepth)
+{
+    //Returns the size of the image array, in bytes, of a bmp file with given dimensions
+    //accounts for the 4 bit padding width 
+    int paddingByteLength = 4-((width * colorDepth) % 4);
+    //if our bytes per row is a multiple of 4 set to zero
+    paddingByteLength = paddingByteLength == 4 ? 0 : paddingByteLength;
+    return (width * colorDepth+paddingByteLength)*height;
+}
 
 typedef struct tagBMPINFOHEADER {
 
@@ -51,7 +62,7 @@ typedef struct tagBMPINFOHEADER {
         *dWdPtr = biClrImportant;
     }
     //constructor
-    tagBMPINFOHEADER(int width, int height) : biWidth(width), biHeight(height), biSizeImage((DWORD)(width * height * 3))
+    tagBMPINFOHEADER(int width, int height) : biWidth(width), biHeight(height), biSizeImage(BMPImageSizeBytes(width,height, COLORBYTES))
     {
         header[2*BMP_INFOHEADERSIZE]='\0'; //put a string escape at the end
         serialize();
@@ -83,7 +94,7 @@ typedef struct tagBMPSTANDARDHEADER
     }
 
     //constructor
-    tagBMPSTANDARDHEADER(int width, int height): biFileSize((DWORD)(width* height * 3 + 2*(BMP_STDHEADERSIZE+BMP_INFOHEADERSIZE)))
+    tagBMPSTANDARDHEADER(int width, int height): biFileSize((DWORD)(BMPImageSizeBytes(width, height, COLORBYTES) + 2*(BMP_STDHEADERSIZE+BMP_INFOHEADERSIZE)))
     {
         header[2 * BMP_STDHEADERSIZE] = '\0'; //put a string escape at the end
         serialize();

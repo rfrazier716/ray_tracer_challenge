@@ -53,7 +53,7 @@ int main()
 	cannonball.set_velocity(20,20, 0); // initialize velocity
 
 	//Make a new canvas to plot the projectiles position
-	std::unique_ptr<Canvas> canvas = std::make_unique<Canvas>(900,550); //make a canvas 640x480 pixels
+	std::unique_ptr<Canvas> canvas = std::make_unique<Canvas>(1920,1080); //make a canvas 640x480 pixels
 
 	std::cout << "initial position of cannonball" << GlmVectorString(cannonball.position) << std::endl;
 	cannonball.time_tick(); // advance the timestep
@@ -66,6 +66,6 @@ int main()
 	}
 	std::cout << "Cannonball terminated after " << cannonball.timestep << " timesteps" << std::endl;
 	std::cout << "writing image to disk" << std::endl;
-	canvas->generateImage(); // write the image to disk
+	canvas->generateImage(bmp); // write the image to disk
 	return 0;
 }
