@@ -59,6 +59,10 @@ add_executable(testCanvas "test/testCanvas.cpp")
 set_target_properties(testCanvas PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
 target_link_libraries(testCanvas Catch catch_main canvas)
 
+# Matrix Test
+add_executable(testMatrix "test/testMatrices.cpp")
+target_link_libraries(testMatrix Catch catch_main)
+
 
 
 enable_testing()
