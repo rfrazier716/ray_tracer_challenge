@@ -27,6 +27,12 @@ bool matricesEqual(T &matrixA, T &matrixB)
     else return false;
 }
 
+template <class T>
+bool vectorsEqual(T& vecA, T& vecB)
+{
+    return glm::all(glm::equal(vecA, vecB));
+}
+
 
 
 SCENARIO("Constructing and Inspecting a 4x4 Matrix", "[matrices]")
@@ -135,8 +141,17 @@ SCENARIO("Matrix Multiplication", "[matrices]")
     }
 }
 
-SCENARIO("Matrix Transformations","[matrices]")
+SCENARIO("Translation Matrix","[matrices]")
 {
+    GIVEN("Two Translation Matrices constructed with overloaded definitions")
+    {
+        auto testMatA = translationMatrix(3, 3, 3);
+        auto testMatB = translationMatrix(3);
+        THEN("They should equate to the same matrix")
+        {
+            REQUIRE(matricesEqual(testMatA, testMatB));
+        }
+    }
     GIVEN("Point at the origin")
     {
         auto position = point(0, 0, 0);
@@ -152,6 +167,45 @@ SCENARIO("Matrix Transformations","[matrices]")
                 position = translate(position, tMat);
                 auto properTranslation = glm::all(glm::equal(position, point(0,0,0)));
                 REQUIRE(properTranslation);
+            }
+        }
+    }
+    GIVEN("A vector pointing towards (1,1,1)")
+    {
+        auto testVector = vector(1, 1, 1);
+        THEN("Translating the vector results in the same vector")
+        {
+            auto properTranslation = glm::all(glm::equal(testVector, translate(testVector, translationMatrix(3, 5, -1))));
+            REQUIRE(properTranslation);
+        }
+    }
+}
+
+SCENARIO("Scaling Matrix", "[matrices]")
+{
+    GIVEN("Two Scaling Matrices constructed with overloaded definitions")
+    {
+        auto testMatA = scaleMatrix(3, 3, 3);
+        auto testMatB = scaleMatrix(3);
+        THEN("They should equate to the same matrix")
+        {
+            REQUIRE(matricesEqual(testMatA, testMatB));
+        }
+    }
+    GIVEN("A point (1,-1,3) and vector <1,-1,3>")
+    {
+        auto testPoint = point(1, -1, 3);
+        auto testVector = vector(1, -1, 3);
+        THEN("Scaling The vector by 2 in each dimension results in new points and vectors")
+        {
+            auto expectedPoint = point(2, -2, 6);
+            auto expectedVector = vector(2, -2, 6);
+            auto scaleMat = scaleMatrix(2, 2, 2);
+            REQUIRE(vectorsEqual(scale(testPoint, scaleMat), expectedPoint));
+            REQUIRE(vectorsEqual(scale(testVector, scaleMat), expectedVector));
+            AND_THEN("The vector is not equal to the point")
+            {
+                REQUIRE(!vectorsEqual(scale(testPoint, scaleMat), scale(testVector, scaleMat)));
             }
         }
     }
