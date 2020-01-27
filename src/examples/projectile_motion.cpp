@@ -66,6 +66,6 @@ int main()
 	}
 	std::cout << "Cannonball terminated after " << cannonball.timestep << " timesteps" << std::endl;
 	std::cout << "writing image to disk" << std::endl;
-	canvas->generateImage(bmp); // write the image to disk
+	canvas->generateImage(ExportFormat::bmp); // write the image to disk
 	return 0;
 }

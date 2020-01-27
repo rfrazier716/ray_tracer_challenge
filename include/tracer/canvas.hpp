@@ -9,7 +9,7 @@
 #include <string>
 #include <stdexcept>
 
-enum ExportFormat { ppm, bmp }; //supported export formats
+enum class ExportFormat { ppm, bmp }; //supported export formats
 
 class Canvas
 {
@@ -31,5 +31,5 @@ public:
 	void writePixel(int row, int column, COLOR color); // function used to write a pixel to the canvas
 	COLOR getPixel(int row, int column); //returns color of the canvas at that pixel value
 	void blank(); //blanks the canvas to all black
-	int generateImage(ExportFormat format = ppm);
+	int generateImage(ExportFormat format = ExportFormat::bmp);
 };

@@ -80,7 +80,7 @@ SCENARIO("Exporting the Canvas", "[canavas]")
             THEN("The files export correctly")
             {
                 //REQUIRE(canvas->generateImage(ppm) == 0);
-                REQUIRE(canvas->generateImage(bmp) == 0);
+                REQUIRE(canvas->generateImage(ExportFormat::bmp) == 0);
             }
         }
     }

@@ -28,6 +28,7 @@ add_executable (tracer "src/tracer.cpp")
 add_library(logger "src/log.cpp")
 add_library(geometry "src/geometry.cpp")
 add_library(canvas "src/canvas.cpp")
+add_library(transforms "src/matrixTransforms.cpp")
 
 # Linking Libraries
 target_link_libraries(tracer logger)
@@ -61,7 +62,7 @@ target_link_libraries(testCanvas Catch catch_main canvas)
 
 # Matrix Test
 add_executable(testMatrix "test/testMatrices.cpp")
-target_link_libraries(testMatrix Catch catch_main)
+target_link_libraries(testMatrix Catch catch_main transforms geometry)
 
 
 

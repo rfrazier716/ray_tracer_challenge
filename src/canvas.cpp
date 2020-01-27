@@ -165,12 +165,10 @@ int Canvas::generateImage(ExportFormat format)
 {
 	switch (format)
 	{
-	case ppm:
-		exportPPM();
-		break;
-	case bmp:
-		exportBMP();
-		break;
+	case ExportFormat::ppm:
+		return exportPPM();
+	case ExportFormat::bmp:
+		return exportBMP();
 	default: 
 		// if no format is picked return a -1 which means an error occured
 		return -1;
