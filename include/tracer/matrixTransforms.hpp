@@ -2,11 +2,12 @@
 #include "glm/vec4.hpp"
 #include <math.h>  //for trig functions
 
+glm::mat4 crossProductMatrix(glm::vec4 &u);
+
 glm::mat4 translationMatrix(float x, float y, float z);
 glm::mat4 translationMatrix(float translation);
 
-glm::mat4 rotationMatrix(float yaw, float pitch, float roll);
-glm::mat4 rotationMatrix(float rotation);
+glm::mat4 rotationMatrix(float rotation,glm::vec4 axis);
 
 glm::mat4 scaleMatrix(float scaleX, float scaleY, float scaleZ);
 glm::mat4 scaleMatrix(float scale);

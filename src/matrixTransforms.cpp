@@ -1,5 +1,16 @@
 #include "tracer/matrixTransforms.hpp"
 
+glm::mat4 crossProductMatrix(glm::vec4& u)
+{
+	//returns a cross product matrix that can act as an operator on a vector
+	return glm::mat4(
+		0, u.z, -u.y, 0,
+		-u.z, 0, u.x, 0,
+		u.y, -u.x, 0, 0,
+		0, 0, 0, 1
+	);
+}
+
 glm::mat4 translationMatrix(float x, float y, float z)
 {
 	return glm::mat4(
@@ -20,19 +31,21 @@ glm::mat4 translationMatrix(float translation)
 
 }
 
-glm::mat4 rotationMatrix(float angle, glm::vec3 revolutionAxis)
+glm::mat4 rotationMatrix(float angle, glm::vec4 revolutionAxis)
 {
 	auto u = glm::normalize(revolutionAxis); //normalize the axis of revolution
-	auto cosX = std::cos(angle); //calculate the cosine once
-	auto sinX = std::sin(angle); //calculate the sine once
-	auto u2 = u * u; // the u vector squared
-	//build the matrix by column to make definition easier
-	auto c0 = glm::vec4(
-		cosX * u2.x *(1-cosX),
-		u.x*u.y*(1-cosX)+u.z*sinX,
-		u.z*u.x*(1-cosX)-u.y*sinX,
-		0
-		);
+	auto cosT = std::cos(angle); //calculate the cosine once
+	auto sinT = std::sin(angle); //calculate the sine once
+
+	//You did the proof on why this is the matrix already
+	//define the cross product matrix 
+	auto ux = crossProductMatrix(u);
+	//the outer product matrix
+	auto outer=glm::outerProduct(u, u);
+	//identity matrix 
+	auto eye = glm::mat4(1.0f);
+	return cosT * eye + sinT * ux + (1 - cosT) * outer;
+
 }
 
 glm::mat4 scaleMatrix(float scaleX, float scaleY, float scaleZ)

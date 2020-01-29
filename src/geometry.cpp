@@ -1,9 +1,7 @@
 #include "tracer/geometry.hpp"
 
 
-#define X_AXIS glm::vec4(1,0,0,0)
-#define Y_AXIS glm::vec4(0,1,0,0)
-#define Z_AXIS glm::vec4(0,0,1,0)
+
 
 extern glm::vec4 point(float x, float y, float z);
 extern glm::vec4 vector(float x, float y, float z);

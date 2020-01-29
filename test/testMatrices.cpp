@@ -1,12 +1,9 @@
 #include "catch.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/epsilon.hpp"
 #include "tracer/matrixTransforms.hpp"
 #include "tracer/geometry.hpp"
-
-#include <iostream>
-#include <memory>
-
 
 //NOTE: GLM USES COLUMN MAJOR MATRICES, WHICH IS EASIER FOR ACCESSING COLUMNS IN GRAPHICS MEMORY. HOWEVER THE BOOK USES ROW MAJOR MATRICES
 template <class T>
@@ -30,7 +27,7 @@ bool matricesEqual(T &matrixA, T &matrixB)
 template <class T>
 bool vectorsEqual(T& vecA, T& vecB)
 {
-    return glm::all(glm::equal(vecA, vecB));
+    return glm::all(glm::epsilonEqual(vecA, vecB,glm::vec4(.000001)));
 }
 
 
@@ -207,6 +204,44 @@ SCENARIO("Scaling Matrix", "[matrices]")
             {
                 REQUIRE(!vectorsEqual(scale(testPoint, scaleMat), scale(testVector, scaleMat)));
             }
+        }
+    }
+}
+
+SCENARIO("Cross Product Matrix" "[matrices]")
+{
+    GIVEN("A vector <1,2,3>")
+    {
+        auto testVec = vector(1, 2, 3);
+        THEN("The cross product matrix should generate correctly")
+        {
+            auto expectedMatrix = glm::mat4(
+                0,3,-2,0,
+                -3,0,1,0,
+                2,-1,0,0,
+                0,0,0,1
+            );
+            auto crossMat = crossProductMatrix(testVec);
+            REQUIRE(matricesEqual(crossMat, expectedMatrix));
+            AND_THEN("The matrix acting on a vector evaluates to a proper cross product")
+            {
+                auto vecB = vector(1,1,1);
+                auto expectedCrossProduct = vector(-1,2,-1);
+                REQUIRE(vectorsEqual(crossMat * vecB, expectedCrossProduct));
+            }
+        }
+    }
+}
+
+SCENARIO("Rotation Matrix", "[matrices]")
+{
+    GIVEN("A vector <1,0,1>")
+    {
+        auto testVect = vector(1, 0, 1);
+        THEN("General Rotation matrix can perform rotation about the x axis")
+        {
+            auto rotMat = rotationMatrix(toRad(90), X_AXIS);
+            REQUIRE(vectorsEqual(rotMat * testVect, vector(1.0,-1.0,0)));
         }
     }
 }
