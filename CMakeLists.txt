@@ -41,6 +41,10 @@ add_executable(projectileMotion "src/examples/projectile_motion.cpp")
 target_link_libraries(projectileMotion canvas geometry)
 set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
+# Points around a clock face
+add_executable(clock "src/examples/clockFace.cpp")
+target_link_libraries(clock canvas geometry transforms)
+set_target_properties(clock PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 # ---Tests---
 enable_testing()

@@ -9,3 +9,4 @@
 #define GREEN COLOR(0,1,0)
 #define BLUE COLOR(0,0,1)
 #define BLACK COLOR(0,0,0)
+#define WHITE COLOR(1,1,1)

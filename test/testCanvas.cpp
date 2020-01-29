@@ -61,6 +61,19 @@ SCENARIO("Writing to Canvas", "[canvas]")
                 REQUIRE(glm::all(glm::equal(canvas->getPixel(2, 3), RED)));
             }
         }
+        WHEN("We use cartesian write to a pixel in location (3,3)")
+        {
+            canvas->writeCartesian(3,3, RED);
+            THEN("the actual pixel that is written is (8,7)")
+            {
+                REQUIRE(glm::all(glm::equal(canvas->getPixel(8,7), RED)));
+            }
+            AND_THEN("Cartesian write to (-3,3) actually writes to (2,13)")
+            {
+                canvas->writeCartesian(-3, -3, RED);
+                REQUIRE(glm::all(glm::equal(canvas->getPixel(2,13), RED)));
+            }
+        }
     }
 }
 

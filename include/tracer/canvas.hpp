@@ -29,6 +29,16 @@ public:
 	~Canvas();	// Destructor
 
 	void writePixel(int row, int column, COLOR color); // function used to write a pixel to the canvas
+
+	/**
+	* \brief write pixels to the canvas assuming it spans from [[-width/2,width/2],[-height/2,height/2]] with zero at the center
+	*
+	* \param x the x coordinate to write to
+	* \param y the y coordinate to write to 
+	* \param color what color value to set the pixel
+	*
+	*/
+	void writeCartesian(float x, float y, COLOR color);
 	COLOR getPixel(int row, int column); //returns color of the canvas at that pixel value
 	void blank(); //blanks the canvas to all black
 	int generateImage(ExportFormat format = ExportFormat::bmp);
