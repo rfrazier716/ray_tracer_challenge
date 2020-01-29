@@ -8,15 +8,8 @@
 #define Y_AXIS glm::vec4(0,1,0,0)
 #define Z_AXIS glm::vec4(0,0,1,0)
 
-inline glm::vec4 point(float x, float y, float z)
-{
-	return glm::vec4(x, y, z, 1.0);
-}
-
-inline glm::vec4 vector(float x, float y, float z)
-{
-	return glm::vec4(x, y, z, 0.0);
-}
+glm::vec4 point(float x, float y, float z);
+glm::vec4 vector(float x, float y, float z);
 
 
 float toRad(float degree);

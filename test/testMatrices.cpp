@@ -27,7 +27,7 @@ bool matricesEqual(T &matrixA, T &matrixB)
 template <class T>
 bool vectorsEqual(T& vecA, T& vecB)
 {
-    return glm::all(glm::epsilonEqual(vecA, vecB,glm::vec4(.000001)));
+    return glm::all(glm::epsilonEqual(vecA, vecB,glm::vec4(.000001f)));
 }
 
 
@@ -240,8 +240,133 @@ SCENARIO("Rotation Matrix", "[matrices]")
         auto testVect = vector(1, 0, 1);
         THEN("General Rotation matrix can perform rotation about the x axis")
         {
+            bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
             auto rotMat = rotationMatrix(toRad(90), X_AXIS);
-            REQUIRE(vectorsEqual(rotMat * testVect, vector(1.0,-1.0,0)));
+            glm::vec4 expectedVectors[] = {
+                vector(1,-1,0),
+                vector(1,0,-1),
+                vector(1,1,0),
+                vector(1,0,1),
+            };
+
+            //rotate the testVector about the x-axis 4 times and confirm it results in the right matrix
+            for (int j = 0; j < 4; j++)
+            {
+                testVect = rotMat * testVect;
+                if (!vectorsEqual(testVect, expectedVectors[j]))
+                {
+                    //if the actual rotation doesn't match the expected rotation, fail the test
+                    rotationTestPassed = false;
+                }
+            }
+            //Require that the four rotations 
+            REQUIRE(rotationTestPassed);
+        }
+        THEN("General Rotation matrix can perform rotation about the y axis")
+        {
+            testVect = vector(1, 0, 1); //reset test vector
+            bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
+            auto rotMat = rotationMatrix(toRad(90), Y_AXIS);
+            glm::vec4 expectedVectors[] = {
+                vector(1,0,-1),
+                vector(-1,0,-1),
+                vector(-1,0,1),
+                vector(1,0,1),
+            };
+
+            //rotate the testVector about the x-axis 4 times and confirm it results in the right matrix
+            for (int j = 0; j < 4; j++)
+            {
+                testVect = rotMat * testVect;
+                if (!vectorsEqual(testVect, expectedVectors[j]))
+                {
+                    //if the actual rotation doesn't match the expected rotation, fail the test
+                    rotationTestPassed = false;
+                }
+            }
+            //Require that the four rotations 
+            REQUIRE(rotationTestPassed);
+        }
+        THEN("General Rotation matrix can perform rotation about the z axis")
+        {
+            testVect = vector(1, 0, 1); //reset test vector
+            bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
+            auto rotMat = rotationMatrix(toRad(90), Z_AXIS);
+            glm::vec4 expectedVectors[] = {
+                vector(0,1,1),
+                vector(-1,0,1),
+                vector(0,-1,1),
+                vector(1,0,1),
+            };
+
+            //rotate the testVector about the x-axis 4 times and confirm it results in the right matrix
+            for (int j = 0; j < 4; j++)
+            {
+                testVect = rotMat * testVect;
+                if (!vectorsEqual(testVect, expectedVectors[j]))
+                {
+                    //if the actual rotation doesn't match the expected rotation, fail the test
+                    rotationTestPassed = false;
+                }
+            }
+            //Require that the four rotations 
+            REQUIRE(rotationTestPassed);
+        }
+        THEN("General Rotation matrix can perform rotation about an arbitrary axis")
+        {
+            testVect = vector(1, 0, 1); //reset test vector
+            bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
+            auto rotMat = rotationMatrix(toRad(90), testVect); //a revolution of a vector about itself should always result in the same vector
+            //rotate the testVector about the x-axis 4 times and confirm it results in the right vector
+            for (int j = 0; j < 4; j++)
+            {
+                testVect = rotMat * testVect;
+                if (!vectorsEqual(testVect, vector(1,0,1)))
+                {
+                    //if the actual rotation doesn't match the expected rotation, fail the test
+                    rotationTestPassed = false;
+                }
+            }
+            //Require that the four rotations 
+            REQUIRE(rotationTestPassed);
+        }
+    }
+}
+
+SCENARIO("Shearing Matrix", "[matrices]")
+{
+    GIVEN("given point p = (2,3,4)")
+    {
+        auto p = point(2, 3, 4);
+        THEN("shearing (2,3,4) with xy=1 results in (5,3,4)")
+        {
+            auto transform = shearMatrix(1, 0, 0, 0, 0, 0);
+            REQUIRE(vectorsEqual(transform * p, point(5, 3, 4)));
+        }
+        THEN("shearing (2,3,4) with xz=1 results in (6,3,4)")
+        {
+            auto transform = shearMatrix(0, 1, 0, 0, 0, 0);
+            REQUIRE(vectorsEqual(transform * p, point(6, 3, 4)));
+        }
+        THEN("shearing (2,3,4) with yx=1 results in (2,5,4)")
+        {
+            auto transform = shearMatrix(0, 0, 1, 0, 0, 0);
+            REQUIRE(vectorsEqual(transform * p, point(2,5,4)));
+        }
+        THEN("shearing (2,3,4) with yz=1 results in (2,7,4)")
+        {
+            auto transform = shearMatrix(0, 0, 0, 1, 0, 0);
+            REQUIRE(vectorsEqual(transform * p, point(2, 7, 4)));
+        }
+        THEN("shearing (2,3,4) with zx=1 results in (2,3,6)")
+        {
+            auto transform = shearMatrix(0, 0, 0, 0, 1, 0);
+            REQUIRE(vectorsEqual(transform * p, point(2, 3, 6)));
+        }
+        THEN("shearing (2,3,4) with zy=1 results in (2,3,7)")
+        {
+            auto transform = shearMatrix(0, 0, 0, 0, 0, 1);
+            REQUIRE(vectorsEqual(transform * p, point(2, 3, 7)));
         }
     }
 }

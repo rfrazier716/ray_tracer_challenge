@@ -70,6 +70,20 @@ glm::mat4 scaleMatrix(float scale)
 	);
 }
 
+glm::mat4 shearMatrix(float xy, float xz, float yx, float yz, float zx, float zy)
+{
+	return glm::mat4(
+		1, yx, zx, 0,
+		xy, 1, zy, 0,
+		xz, yz, 1, 0,
+		0, 0, 0, 1
+	);
+}
+glm::mat4 shearMatrix(float shear)
+{
+	return shearMatrix(shear, shear, shear, shear, shear, shear);
+}
+
 glm::vec4 translate(glm::vec4 &tuple, glm::mat4 &translationMatrix)
 {
 	return translationMatrix * tuple;

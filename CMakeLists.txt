@@ -38,7 +38,7 @@ target_link_libraries(tracer logger)
 
 # Projectile motion example
 add_executable(projectileMotion "src/examples/projectile_motion.cpp")
-target_link_libraries(projectileMotion canvas)
+target_link_libraries(projectileMotion canvas geometry)
 set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 
@@ -53,12 +53,12 @@ add_library(catch_main "test/catch_main.cpp")
 # Tuple/GLM Test
 add_executable(testTuple "test/verify_tuple.cpp")
 set_target_properties(testTuple PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
-target_link_libraries(testTuple Catch catch_main)
+target_link_libraries(testTuple Catch catch_main geometry)
 
 # Canvas Test
 add_executable(testCanvas "test/testCanvas.cpp")
 set_target_properties(testCanvas PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
-target_link_libraries(testCanvas Catch catch_main canvas)
+target_link_libraries(testCanvas Catch catch_main canvas geometry)
 
 # Matrix Test
 add_executable(testMatrix "test/testMatrices.cpp")

@@ -12,6 +12,9 @@ glm::mat4 rotationMatrix(float rotation,glm::vec4 axis);
 glm::mat4 scaleMatrix(float scaleX, float scaleY, float scaleZ);
 glm::mat4 scaleMatrix(float scale);
 
+glm::mat4 shearMatrix(float xy, float xz, float yx, float yz, float zx, float zy);
+glm::mat4 shearMatrix(float shear);
+
 
 glm::vec4 translate(glm::vec4 &tuple, glm::mat4 &translationMatrix);
 glm::vec4 rotate(glm::vec4 &tuple, glm::mat4 &rotationMatrix);

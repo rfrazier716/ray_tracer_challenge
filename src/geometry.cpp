@@ -1,10 +1,14 @@
 #include "tracer/geometry.hpp"
 
+glm::vec4 point(float x, float y, float z)
+{
+	return glm::vec4(x, y, z, 1.0);
+}
 
-
-
-extern glm::vec4 point(float x, float y, float z);
-extern glm::vec4 vector(float x, float y, float z);
+glm::vec4 vector(float x, float y, float z)
+{
+	return glm::vec4(x, y, z, 0.0);
+}
 
 float toRad(float degree) { return (degree * M_PI / 180.0); }
 //converts degree to radians
