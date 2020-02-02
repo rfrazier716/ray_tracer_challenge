@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include "glm/glm.hpp"
-#include "tracer/geometry.hpp" //Include the geometry file
+#include "tracer/geometry/primitives.hpp" //Include the geometry file
 
 SCENARIO("Vector Math", "[vectorOps]") 
 {

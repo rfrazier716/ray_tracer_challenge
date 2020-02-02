@@ -22,28 +22,23 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 
 
 # Add source to this project's executable.
-add_executable (tracer "src/tracer.cpp")
 
 # Adding Libraries
-add_library(logger "src/log.cpp")
-add_library(geometry "src/geometry.cpp")
 add_library(canvas "src/canvas.cpp")
 add_library(transforms "src/matrixTransforms.cpp")
-
-# Linking Libraries
-target_link_libraries(tracer logger)
+add_library(primitives "src/geometry/primitives.cpp")
 
 
 # ---Building Examples ---
 
 # Projectile motion example
 add_executable(projectileMotion "src/examples/projectile_motion.cpp")
-target_link_libraries(projectileMotion canvas geometry)
+target_link_libraries(projectileMotion canvas primitives)
 set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 # Points around a clock face
 add_executable(clock "src/examples/clockFace.cpp")
-target_link_libraries(clock canvas geometry transforms)
+target_link_libraries(clock canvas primitives transforms)
 set_target_properties(clock PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 # ---Tests---

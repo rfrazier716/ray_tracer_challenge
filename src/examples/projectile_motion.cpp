@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 
-#include "tracer/geometry.hpp"
+#include "tracer/geometry/primitives.hpp"
 #include "tracer/canvas.hpp"
 
 class projectile

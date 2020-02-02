@@ -1,7 +1,8 @@
 #include "tracer/canvas.hpp" //canvas handles image transport
-#include "tracer/geometry.hpp" //for points and vectors currently
+#include "tracer/geometry/primitives.hpp" //for points and vectors currently
 #include "tracer/colors.hpp" //for colors
 #include "tracer/matrixTransforms.hpp" 
+#include "tracer/math.hpp"
 
 #include <memory>
 

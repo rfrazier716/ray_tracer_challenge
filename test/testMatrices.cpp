@@ -3,7 +3,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtc/epsilon.hpp"
 #include "tracer/matrixTransforms.hpp"
-#include "tracer/geometry.hpp"
+#include "tracer/geometry/primitives.hpp"
+#include "tracer/math.hpp"
 
 //NOTE: GLM USES COLUMN MAJOR MATRICES, WHICH IS EASIER FOR ACCESSING COLUMNS IN GRAPHICS MEMORY. HOWEVER THE BOOK USES ROW MAJOR MATRICES
 template <class T>
@@ -241,7 +242,7 @@ SCENARIO("Rotation Matrix", "[matrices]")
         THEN("General Rotation matrix can perform rotation about the x axis")
         {
             bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
-            auto rotMat = rotationMatrix(toRad(90), X_AXIS);
+            auto rotMat = rotationMatrix(tracer::toRad(90), X_AXIS);
             glm::vec4 expectedVectors[] = {
                 vector(1,-1,0),
                 vector(1,0,-1),
@@ -266,7 +267,7 @@ SCENARIO("Rotation Matrix", "[matrices]")
         {
             testVect = vector(1, 0, 1); //reset test vector
             bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
-            auto rotMat = rotationMatrix(toRad(90), Y_AXIS);
+            auto rotMat = rotationMatrix(tracer::toRad(90), Y_AXIS);
             glm::vec4 expectedVectors[] = {
                 vector(1,0,-1),
                 vector(-1,0,-1),
@@ -291,7 +292,7 @@ SCENARIO("Rotation Matrix", "[matrices]")
         {
             testVect = vector(1, 0, 1); //reset test vector
             bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
-            auto rotMat = rotationMatrix(toRad(90), Z_AXIS);
+            auto rotMat = rotationMatrix(tracer::toRad(90), Z_AXIS);
             glm::vec4 expectedVectors[] = {
                 vector(0,1,1),
                 vector(-1,0,1),
@@ -316,7 +317,7 @@ SCENARIO("Rotation Matrix", "[matrices]")
         {
             testVect = vector(1, 0, 1); //reset test vector
             bool rotationTestPassed = true; //tracks if every rotation results in the correct vector
-            auto rotMat = rotationMatrix(toRad(90), testVect); //a revolution of a vector about itself should always result in the same vector
+            auto rotMat = rotationMatrix(tracer::toRad(90), testVect); //a revolution of a vector about itself should always result in the same vector
             //rotate the testVector about the x-axis 4 times and confirm it results in the right vector
             for (int j = 0; j < 4; j++)
             {
