@@ -2,9 +2,14 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtc/epsilon.hpp"
-#include "tracer/matrixTransforms.hpp"
+
+#include "tracer/geometry/transforms.hpp"
 #include "tracer/geometry/primitives.hpp"
+
 #include "tracer/math.hpp"
+
+using namespace tracer;
+using namespace geometry;
 
 //NOTE: GLM USES COLUMN MAJOR MATRICES, WHICH IS EASIER FOR ACCESSING COLUMNS IN GRAPHICS MEMORY. HOWEVER THE BOOK USES ROW MAJOR MATRICES
 template <class T>

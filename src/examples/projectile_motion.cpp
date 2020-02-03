@@ -7,6 +7,7 @@
 #include "tracer/geometry/primitives.hpp"
 #include "tracer/canvas.hpp"
 
+using namespace tracer::geometry; 
 class projectile
 {
 	public:

@@ -25,7 +25,7 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 
 # Adding Libraries
 add_library(canvas "src/canvas.cpp")
-add_library(transforms "src/matrixTransforms.cpp")
+add_library(transforms "src/geometry/transforms.cpp")
 add_library(primitives "src/geometry/primitives.cpp")
 
 
@@ -52,19 +52,20 @@ add_library(catch_main "test/catch_main.cpp")
 # Tuple/GLM Test
 add_executable(testTuple "test/verify_tuple.cpp")
 set_target_properties(testTuple PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
-target_link_libraries(testTuple Catch catch_main geometry)
+target_link_libraries(testTuple Catch catch_main primitives)
 
 # Canvas Test
 add_executable(testCanvas "test/testCanvas.cpp")
 set_target_properties(testCanvas PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${TEST_BIN_DIRECTORY}")
-target_link_libraries(testCanvas Catch catch_main canvas geometry)
+target_link_libraries(testCanvas Catch catch_main canvas primitives)
 
 # Matrix Test
 add_executable(testMatrix "test/testMatrices.cpp")
-target_link_libraries(testMatrix Catch catch_main transforms geometry)
+target_link_libraries(testMatrix Catch catch_main transforms primitives)
 
 
 
 enable_testing()
 add_test(NAME Tuples COMMAND tuple_test)
 add_test(NAME Canvas COMMAND testCanvas)
+add_test(NAME Matrices COMMAND testMatrix)

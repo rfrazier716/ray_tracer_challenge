@@ -1,10 +1,12 @@
 #include "tracer/canvas.hpp" //canvas handles image transport
 #include "tracer/geometry/primitives.hpp" //for points and vectors currently
 #include "tracer/colors.hpp" //for colors
-#include "tracer/matrixTransforms.hpp" 
+#include "tracer/geometry/transforms.hpp" 
 #include "tracer/math.hpp"
 
 #include <memory>
+
+using namespace tracer::geometry;
 
 
 //should generate 4 circes of varying radius going red->green->blue->white

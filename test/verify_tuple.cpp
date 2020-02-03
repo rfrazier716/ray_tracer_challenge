@@ -4,6 +4,9 @@
 #include "glm/glm.hpp"
 #include "tracer/geometry/primitives.hpp" //Include the geometry file
 
+using namespace tracer;
+using namespace geometry;
+
 SCENARIO("Vector Math", "[vectorOps]") 
 {
     GIVEN("Have 2 points and two vectors")
