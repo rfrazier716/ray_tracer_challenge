@@ -13,7 +13,7 @@ using namespace geometry;
 
 //NOTE: GLM USES COLUMN MAJOR MATRICES, WHICH IS EASIER FOR ACCESSING COLUMNS IN GRAPHICS MEMORY. HOWEVER THE BOOK USES ROW MAJOR MATRICES
 template <class T>
-bool matricesEqual(T &matrixA, T &matrixB)
+bool matricesEqual(T& matrixA, T& matrixB)
 {
     if (matrixA.length() == matrixB.length())
     {
@@ -33,11 +33,8 @@ bool matricesEqual(T &matrixA, T &matrixB)
 template <class T>
 bool vectorsEqual(T& vecA, T& vecB)
 {
-    return glm::all(glm::epsilonEqual(vecA, vecB,glm::vec4(.000001f)));
+    return glm::all(glm::epsilonEqual(vecA, vecB, glm::vec4(.000001f)));
 }
-
-
-
 SCENARIO("Constructing and Inspecting a 4x4 Matrix", "[matrices]")
 {
     GIVEN("Creating a 4x4 Matrix with the following values ")

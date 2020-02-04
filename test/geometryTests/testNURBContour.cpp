@@ -2,9 +2,16 @@
 #include "tracer/geometry/nurbs/nurbc.hpp"
 #include "catch.hpp"
 #include "glm/glm.hpp"
+#include "glm/gtc/epsilon.hpp"
 
 using namespace tracer;
 using namespace geometry;
+
+template <class T>
+bool vectorsEqual(T& vecA, T& vecB)
+{
+	return glm::all(glm::epsilonEqual(vecA, vecB, glm::vec4(.000001f)));
+}
 
 SCENARIO("Constructing and Inspecting a nurbs contour", "[geometry]")
 {
@@ -41,6 +48,33 @@ SCENARIO("Constructing and Inspecting a nurbs contour", "[geometry]")
 				}
 				REQUIRE(knotsDefaultValueValid);
 			}
+		}
+	}
+}
+
+SCENARIO("Modifying nurbs parameters", "[geometry]")
+{
+	GIVEN("A nurbs contour of degree 3")
+	{
+		auto degree = 3;
+		auto contour = NURBC(degree);
+		THEN("changing control point [0] to <1,2,3> updates the coordinate")
+		{
+			auto newControlPoint = point(1, 2, 3);
+			contour.setPoint(0, newControlPoint);
+			REQUIRE(vectorsEqual(newControlPoint, contour.getPoint(0)));
+			AND_THEN("The weight vector and knot vector do not change")
+			{
+
+			}
+		}
+		THEN("If the curve is unclamped, any knot vector can be edited")
+		{
+
+		}
+		THEN("If the curve is clamped, writing to protected knots will result in no change")
+		{
+
 		}
 	}
 }

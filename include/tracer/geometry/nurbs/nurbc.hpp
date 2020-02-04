@@ -19,16 +19,18 @@ namespace tracer //use tracer namespace for ray tracer functions
 		class NURBC //a nurbs contour that can exist in three dimensions but has on sampling parameter (t) defined on t->[0,1]
 		{
 		private:
+			bool clampedAtStart=true; // whether the curved is clamped to the first control point, if so the first degree + 1 points will be set to zero
+			bool clampedAtEnd=true; // whether the curve is clamped to the last control point, if so the last degree + 1 points will be set to zero
+
 			//knots, control points and weight are defined as std::vector so they can be expanded on the fly
 			std::vector<float> knots; //knot vector
 			std::vector<glm::vec4> controlPoints; //control points
 			std::vector<float> weights; // weight vector
 
 			const int degree; // degree is a constant and cannot be changed without creating a new object
+		
 		public:
 
-			bool clampedAtStart; // whether the curved is clamped to the first control point, if so the first degree + 1 points will be set to zero
-			bool clampedAtEnd; // whether the curve is clamped to the last control point, if so the last degree + 1 points will be set to zero
 
 			NURBC(int); //generator function
 			
@@ -43,6 +45,11 @@ namespace tracer //use tracer namespace for ray tracer functions
 
 			float getKnot(int);
 			void setKnot(int, float);
+
+			void clampStart();
+			void clampEnd();
+			void freeStart();
+			void freeEnd();
 		};
 	}
 }
