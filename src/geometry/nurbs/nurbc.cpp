@@ -35,3 +35,43 @@ NURBC::NURBC(int degree) : degree(degree)
 	
 	
 }
+
+int NURBC::nCPoints()
+{
+	return controlPoints.size();
+}
+
+int NURBC::nKnots()
+{
+	return knots.size();
+}
+
+glm::vec4 NURBC::getPoint(int index)
+{
+	return controlPoints[index];
+}
+
+void NURBC::setPoint(int index, glm::vec4 value)
+{
+	controlPoints[index] = value;
+}
+
+float NURBC::getWeight(int index)
+{
+	return weights[index];
+}
+
+void NURBC::setWeight(int index, float value)
+{
+	weights[index] = value;
+}
+
+float NURBC::getKnot(int index)
+{
+	return knots[index];
+}
+
+void NURBC::setKnot(int index, float value)
+{
+	knots[index] = value;
+}
