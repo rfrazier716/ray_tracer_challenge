@@ -1,21 +1,30 @@
 /**
-* a nurbs curve that can evaluated along the range t=0:1, will automatically clamp the surface at ends
-*
-*
-*/
-
+ * \class NURBC
+ *
+ *
+ * \brief A nurbs contour 
+ *
+ *
+ *
+ */
 #pragma once //only evaluate this code once
-#include "geometry/primitives.hpp" //primitives library for points
+#include <vector> //required for std::vector
+#include "tracer/geometry/primitives.hpp" //primitives library for points
 
 namespace tracer //use tracer namespace for ray tracer functions 
 {
-	template<int pts,int degree>
-	class nurbc //a nurbs contour that can exist in three dimensions but has on sampling parameter (t) defined on t->[0,1]
+	class NURBC //a nurbs contour that can exist in three dimensions but has on sampling parameter (t) defined on t->[0,1]
 	{
 	private:
-		std::vector 
-		//knot vector
-		//control points as std::vector
-		//degree
+		//knots, control points and weight are defined as std::vector so they can be expanded on the fly
+		std::vector<float> knots; //knot vector
+		std::vector<glm::vec4> controlPoints; //control points
+		std::vector<float> weights; // weight vector
+
+		const int degree; // degree is a constant and 
+
+		NURBC(int degree);
+
 	};
+
 }

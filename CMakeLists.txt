@@ -27,6 +27,8 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 add_library(canvas "src/canvas.cpp")
 add_library(transforms "src/geometry/transforms.cpp")
 add_library(primitives "src/geometry/primitives.cpp")
+## nurbs
+add_library(nurbc "src/geometry/nurbs/nurbc.cpp")
 
 
 # ---Building Examples ---
@@ -62,6 +64,10 @@ target_link_libraries(testCanvas Catch catch_main canvas primitives)
 # Matrix Test
 add_executable(testMatrix "test/testMatrices.cpp")
 target_link_libraries(testMatrix Catch catch_main transforms primitives)
+
+# NURBS Contour Test
+add_executable(testNurbsC "test/geometryTests/testNURBContour.cpp")
+target_link_libraries(testNurbsC Catch catch_main nurbc primitives)
 
 
 

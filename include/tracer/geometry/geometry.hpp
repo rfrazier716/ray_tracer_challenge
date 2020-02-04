@@ -2,4 +2,4 @@
 
 #include "./primitives.hpp"
 #include "./transforms.hpp"
-#include "./nurbs.hpp"
+#include "./nurbs/nurbs.hpp"
