@@ -14,7 +14,7 @@ int main()
 {
 	int canvasSize = 250;
 	auto canvas = std::make_unique<Canvas>(canvasSize,canvasSize); //create a new canvas object
-	float theta = 2 * M_PI / 12.0f;
+	float theta = 2 * F_PI / 12.0f;
 	auto rotMat = rotationMatrix(-theta, Z_AXIS);
 	COLOR colors[] = { RED,GREEN,BLUE,WHITE };
 	for (int circNum = 0; circNum < 4; circNum++)

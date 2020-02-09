@@ -81,7 +81,12 @@ add_executable(testObject "test/actorTests/testObject.cpp")
 target_link_libraries(testObject Catch catch_main nurbc)
 add_test(NAME ObjectClass COMMAND testObject)
 
-# Circle Test
+# Sphere Test
 add_executable(testSpheres "test/geometryTests/testSphere.cpp")
 target_link_libraries(testSpheres Catch catch_main sphere)
 add_test(NAME sphereClass COMMAND testSpheres)
+
+# Ray Structure Test
+add_executable(testRay "test/geometryTests/testRay.cpp")
+target_link_libraries(testRay Catch catch_main)
+add_test(NAME rayStruct COMMAND testRay)

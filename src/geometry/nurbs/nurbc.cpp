@@ -89,7 +89,7 @@ void NURBC::clampEnd()
 {
 	clampedAtEnd = true;
 	//rewrite last degree + 1 knots to be 1.0f
-	for (int j = knots.size()-(degree + 1); j < knots.size(); j++)
+	for (unsigned int j = knots.size()-(degree + 1); j < knots.size(); j++)
 	{
 		knots.at(j) = 1.0f;
 	}

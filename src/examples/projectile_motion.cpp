@@ -15,7 +15,7 @@ class projectile
 		glm::vec4 position=point(0,0,0);
 		const glm::vec4 gravity = vector(0, -1, 0);
 		glm::vec4 velocity=vector(0,0,0);
-		glm::vec4 windSpeed = vector(-.01, 0, 0);
+		glm::vec4 windSpeed = vector(-.01f, 0, 0);
 
 	void set_velocity(float x, float y, float z)
 	{

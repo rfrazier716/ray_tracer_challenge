@@ -14,4 +14,7 @@ namespace tracer
 	
 	template<class T>
 	inline bool vectorEqual(T vecA, T vecB) { return glm::all(glm::epsilonEqual(vecA, vecB, T(1.0))); }
+
+	template<class T>
+	static bool areSame(T a, T b, T epsilon) { return std::fabs(a - b) < epsilon; }
 }

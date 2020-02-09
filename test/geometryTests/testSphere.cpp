@@ -10,6 +10,8 @@
 
 using namespace tracer;
 
+
+
 SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 {
 	GIVEN("A new Sphere Object")
@@ -56,10 +58,10 @@ SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 			auto u = 0.5f;
 			float vVals[] = { 0, 0.25, 0.5, 1.0 };
 			POINT expectedPoints[] = {
-				geometry::point(0,1,0),
 				geometry::point(1,0,0),
-				geometry::point(0,-1,0),
-				geometry::point(-1,0,0)
+				geometry::point(0,1,0),
+				geometry::point(-1,0,0),
+				geometry::point(0,-1,0)
 			};
 			for (int j=0;j<1;j++)
 			{
@@ -87,6 +89,28 @@ SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 				}
 			}
 			REQUIRE(sphereRadiusCorrect);
+		}
+	}
+}
+SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
+{
+	GIVEN("A ray at the (-10,0,0) pointing towards (1,0,0) and a unit sphere") 
+	{
+		auto ray = geometry::Ray{ 
+			geometry::point(-10, 0, 0), 
+			geometry::vector(1, 0, 0) };
+		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		THEN("The sphere should intersect the sphere at two points")
+		{
+			geometry::Intersection hits[2];
+			auto nHits = sphere->findIntersections(ray, hits);
+			REQUIRE(nHits == 2);
+			AND_THEN("The hits should be unique and at t=8 and t=10")
+			{
+				REQUIRE(hits[0].t != hits[1].t);
+				REQUIRE((areSame(hits[0].t,8.0f,FLT_EPSILON) || areSame(hits[0].t, 10.0f,FLT_EPSILON)));
+				REQUIRE((areSame(hits[1].t, 8.0f, FLT_EPSILON) || areSame(hits[1].t, 10.0f, FLT_EPSILON)));
+			}
 		}
 	}
 }
