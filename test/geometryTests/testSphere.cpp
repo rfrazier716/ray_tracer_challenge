@@ -10,8 +10,6 @@
 
 using namespace tracer;
 
-
-
 SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 {
 	GIVEN("A new Sphere Object")
@@ -108,9 +106,56 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 			AND_THEN("The hits should be unique and at t=8 and t=10")
 			{
 				REQUIRE(hits[0].t != hits[1].t);
-				REQUIRE((areSame(hits[0].t,8.0f,FLT_EPSILON) || areSame(hits[0].t, 10.0f,FLT_EPSILON)));
-				REQUIRE((areSame(hits[1].t, 8.0f, FLT_EPSILON) || areSame(hits[1].t, 10.0f, FLT_EPSILON)));
+				REQUIRE((areSame(hits[0].t,9.0f,FLT_EPSILON) || areSame(hits[0].t, 11.0f,FLT_EPSILON)));
+				REQUIRE((areSame(hits[1].t, 9.0f, FLT_EPSILON) || areSame(hits[1].t, 11.0f, FLT_EPSILON)));
 			}
+		}
+	}
+	GIVEN("A ray at the (-10,1,0) pointing towards (1,0,0) and a unit sphere")
+	{
+		auto ray = geometry::Ray{
+			geometry::point(-10, 1, 0),
+			geometry::vector(1, 0, 0) };
+		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		THEN("The sphere should intersect the sphere at one point")
+		{
+			geometry::Intersection hits[2];
+			auto nHits = sphere->findIntersections(ray, hits);
+			REQUIRE(nHits == 1);
+			AND_THEN("The hits should be unique and at t=8 and t=10")
+			{
+				REQUIRE(hits[0].t == hits[1].t);
+				REQUIRE(areSame(hits[0].t, 10.0f, FLT_EPSILON));
+			}
+		}
+	}
+	GIVEN("A ray at the (-10,1.01,0) pointing towards (1,0,0) and a unit sphere")
+	{
+		auto ray = geometry::Ray{
+			geometry::point(-10, 1.01, 0),
+			geometry::vector(1, 0, 0) };
+		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		THEN("The ray should not intersect the sphere")
+		{
+			geometry::Intersection hits[2];
+			auto nHits = sphere->findIntersections(ray, hits);
+			REQUIRE(nHits == 0);
+		}
+	}
+	//Edge Cases
+	GIVEN("A Ray inside of the sphere at the origin")
+	{
+		auto sphere = std::make_unique<geometry::Sphere>();
+		auto ray = geometry::Ray{
+			geometry::point(0,0,0),
+			geometry::vector(0.1,0.2,0.4)
+		};
+		THEN("The ray should intersect the sphere at +/- t")
+		{
+			geometry::Intersection hits[2];
+			auto nHits = sphere->findIntersections(ray, hits);
+			REQUIRE(nHits == 2);
+			REQUIRE(areSame(hits[0].t + hits[1].t, 0.0f,FLT_EPSILON));
 		}
 	}
 }

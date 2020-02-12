@@ -35,7 +35,8 @@ glm::vec2 geometry::Sphere::uvFromPoint(glm::vec4 point)
 {
 	//have to subtract 1.0f from the point magnitude because the w component of a point is 1.0
 	//assert the point is on the unit sphere
-	assert(areSame(glm::dot(point,point)-1.0f, 1.0f, FLT_EPSILON) || !(std::cerr << "False: " << glm::dot(point, point) - 1.0f << "!=1.0"));
+	auto pointMagnitude = glm::dot(point, point) - 1.0f;
+	assert(areSame(glm::dot(point,point)-1.0f, 1.0f, FLT_EPSILON) || !(std::cerr << point.x <<","<< point.y << "," << point.z << "," << point.w ));
 	auto theta = std::acos(point.z); 
 	auto phi = std::atan2(point.y, point.x);
 	auto u = theta / F_PI;
@@ -68,9 +69,9 @@ int geometry::Sphere::findIntersections(Ray ray, Intersection* intersections)
 	// descriminant>0	2 intersections
 	// descriminant<0	0 intersections because square root results in an imaginary number
 
-	auto a = glm::length(ray.direction); 
-	auto b = glm::dot(ray.direction, ray.position);
-	auto c = glm::length(ray.position) - 1; 
+	auto a = glm::dot(ray.direction.xyz(), ray.direction.xyz());
+	auto b = 2*glm::dot(ray.direction.xyz(), ray.position.xyz());
+	auto c = glm::dot(ray.position.xyz(),ray.position.xyz()) - 1.0f; 
 
 	auto discriminant = std::pow(b, 2) - 4 * a * c;
 	if (discriminant < 0)
@@ -85,10 +86,9 @@ int geometry::Sphere::findIntersections(Ray ray, Intersection* intersections)
 		// populate the intersection array
 		for (int j = 0; j < 2; j++)
 		{
-			auto intersection = *(intersections + j); // the intersection to be updated
-			intersection.t = t;
-			intersection.u = uv[0];
-			intersection.v = uv[1];
+			intersections[j].t = t;
+			intersections[j].u = uv[0];
+			intersections[j].v = uv[1];
 		}
 		return 1; // return that there is one intersection
 	}
@@ -98,13 +98,12 @@ int geometry::Sphere::findIntersections(Ray ray, Intersection* intersections)
 		for (int j = 0; j < 2; j++)
 		{
 			auto multiplier = j % 2 == 0 ? -1.0f : 1.0f; // the multiplier for the root function
-			auto intersection = *(intersections + j); // the intersection to be updated
-			auto t = -b + multiplier * std::sqrtf(discriminant) / (2 * a); // solve the 2nd order root equation
+			auto t = (-b + multiplier * std::sqrtf(discriminant) )/ (2 * a); // solve the 2nd order root equation
 			auto uv = uvFromPoint(sampleRay(ray, t)); //get the uv coordinates of the intersection
 
-			intersection.t = t;
-			intersection.u = uv[0];
-			intersection.v = uv[1];
+			intersections[j].t = t;
+			intersections[j].u = uv[0];
+			intersections[j].v = uv[1];
 		}
 		return 2;
 	}

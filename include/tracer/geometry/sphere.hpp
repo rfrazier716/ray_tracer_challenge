@@ -1,4 +1,5 @@
 #pragma once //Only execute once
+#define GLM_SWIZZLE //include swizzling for this library
 #include "glm/mat4x4.hpp" // the 4d matrix tracks the transform from world coordinate space to object coordinate space
 #include "glm/vec2.hpp" //used for uv pairs
 #include "tracer/geometry/primitives.hpp" //required for points, vectors, and macros
