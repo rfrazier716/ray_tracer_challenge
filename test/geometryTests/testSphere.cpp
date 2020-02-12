@@ -1,5 +1,6 @@
 #include "tracer/geometry/sphere.hpp"
 #include "tracer/geometry/primitives.hpp" 
+#include "tracer/geometry/transforms.hpp"
 
 #include "catch.hpp"
 #include "glm/glm.hpp"
@@ -41,7 +42,7 @@ SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 		THEN("if u=0.5, regardless of the value of v z should be 0")
 		{
 			auto uMappingFunctional = true;
-			auto u = 0.5;
+			auto u = 0.5f;
 			for (float v = 0; v < 100.; v++)
 			{
 				if (std::abs(sphereA->sample(u , v / 100.0f).z-0)>FLT_EPSILON)
@@ -117,6 +118,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 			geometry::point(-10, 1, 0),
 			geometry::vector(1, 0, 0) };
 		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		geometry::transform(*sphere, geometry::scaleMatrix(10.0f, 1.0f, 1.0f));
 		THEN("The sphere should intersect the sphere at one point")
 		{
 			geometry::Intersection hits[2];
@@ -132,7 +134,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 	GIVEN("A ray at the (-10,1.01,0) pointing towards (1,0,0) and a unit sphere")
 	{
 		auto ray = geometry::Ray{
-			geometry::point(-10, 1.01, 0),
+			geometry::point(-10, 1.01f, 0),
 			geometry::vector(1, 0, 0) };
 		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
 		THEN("The ray should not intersect the sphere")
@@ -148,7 +150,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 		auto sphere = std::make_unique<geometry::Sphere>();
 		auto ray = geometry::Ray{
 			geometry::point(0,0,0),
-			geometry::vector(0.1,0.2,0.4)
+			geometry::vector(0.1f,0.2f,0.4f)
 		};
 		THEN("The ray should intersect the sphere at +/- t")
 		{

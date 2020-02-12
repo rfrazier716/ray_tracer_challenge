@@ -83,8 +83,8 @@ add_test(NAME ObjectClass COMMAND testObject)
 
 # Sphere Test
 add_executable(testSpheres "test/geometryTests/testSphere.cpp")
-target_link_libraries(testSpheres Catch catch_main sphere)
-add_test(NAME sphereClass COMMAND testSpheres)
+target_link_libraries(testSpheres Catch catch_main sphere transforms)
+add_test(NAME sphereClass COMMAND testSpheres )
 
 # Ray Structure Test
 add_executable(testRay "test/geometryTests/testRay.cpp")

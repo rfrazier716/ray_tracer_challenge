@@ -44,7 +44,7 @@ glm::vec2 geometry::Sphere::uvFromPoint(glm::vec4 point)
 	return glm::vec2(u, v);
 }
 
-void geometry::Sphere::setWorldTransform(glm::mat4& transform) {
+void geometry::Sphere::setWorldTransform(glm::mat4 const& transform) {
 	toWorldSpaceTMat = transform;
 	updateInverseTransform = true; //setter to tell object that it needs to modify it's inverse matrix
 }
@@ -64,6 +64,9 @@ glm::mat4 geometry::Sphere::getObjectTransform() {
 
 int geometry::Sphere::findIntersections(Ray ray, Intersection* intersections)
 {
+	// Transform the ray from world space to object space
+	ray.position = getWorldTransform() * ray.position;
+	ray.direction = getWorldTransform() * ray.direction;
 	// the number of intersections is solved by the discriminant of the square root 
 	// descriminant=0	1 intersection
 	// descriminant>0	2 intersections

@@ -101,3 +101,7 @@ using namespace tracer;
 		return  scaleMatrix * tuple;
 	}
 
+	void geometry::transform(Sphere& sphere,  glm::mat4 const& transformMatrix)
+	{
+		sphere.setWorldTransform(transformMatrix*sphere.getWorldTransform());
+	}

@@ -1,5 +1,5 @@
 #pragma once //Only execute once
-#define GLM_SWIZZLE //include swizzling for this library
+#define GLM_FORCE_SWIZZLE //include swizzling for this library
 #include "glm/mat4x4.hpp" // the 4d matrix tracks the transform from world coordinate space to object coordinate space
 #include "glm/vec2.hpp" //used for uv pairs
 #include "tracer/geometry/primitives.hpp" //required for points, vectors, and macros
@@ -46,7 +46,7 @@ namespace tracer{
 
 
 
-            void setWorldTransform(glm::mat4& transform); //!< sets the world transform matrix, will overwrite the current matrix
+            void setWorldTransform(glm::mat4 const& transform); //!< sets the world transform matrix, will overwrite the current matrix
             glm::mat4 getWorldTransform(); //!< returns the value of the world transform matrix
             glm::mat4 getObjectTransform(); //!< returns the value of the object space transform matrix 
 
@@ -55,6 +55,7 @@ namespace tracer{
             * 
             * the ray and a pointer to the intersection array is passed as function arguments.
             * The return argument is an int with how many intersections occured
+            * The ray that is passed should be represented in the world coordinate space, locally the function will transform it into object space
             * 
             * possible outcomes are:
             * 0 intersections - the intersection array is not modified, the function returns false;

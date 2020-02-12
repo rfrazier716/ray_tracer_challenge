@@ -1,6 +1,10 @@
 #include "glm/mat4x4.hpp"
 #include "glm/vec4.hpp"
 #include <math.h>  //for trig functions
+
+#include "tracer/geometry/primitives.hpp"
+#include "tracer/geometry/sphere.hpp"
+
 namespace tracer
 {
 	namespace geometry
@@ -22,5 +26,8 @@ namespace tracer
 		glm::vec4 translate(glm::vec4& tuple, glm::mat4& translationMatrix);
 		glm::vec4 rotate(glm::vec4& tuple, glm::mat4& rotationMatrix);
 		glm::vec4 scale(glm::vec4& tuple, glm::mat4& scaleMatrix);
+
+		//Transform matrixes for various geometries
+		void transform(Sphere& sphere,  glm::mat4 const& transformMatrix);
 	}
 }
