@@ -8,8 +8,19 @@
 
 #include <memory> // for smart pointers
 #include <vector> // to use std::vector
+#include <iostream>
 
 using namespace tracer;
+
+template<class T>
+void logVector(T vect) 
+{
+	for (int j = 0; j < vect.length(); j++)
+	{
+		std::cout << vect[j] << " ";
+	}
+	std::cout << std::endl;
+}
 
 SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 {
@@ -80,14 +91,38 @@ SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 				for (int v = 0; v <= 100; v++)
 				{
 					auto sphereRadius = sphereA->sample(u / 100.0f, v / 100.0f);
-					geometry::toVector(sphereRadius); // convert to a vector
-					if (std::abs(glm::length(sphereRadius) - 1.0f) > FLT_EPSILON)
+					if (std::abs(glm::length(geometry::toVector(sphereRadius)) - 1.0f) > FLT_EPSILON)
 					{
 						sphereRadiusCorrect = false;
 					}
 				}
 			}
 			REQUIRE(sphereRadiusCorrect);
+		}
+
+	}
+}
+SCENARIO("Applying Transforms to a Sphere", "[Sphere]")
+{
+	GIVEN("A unit Sphere Object")
+	{
+		auto sphere = std::make_unique<geometry::Sphere>();
+		THEN("The sphere's coordinates a (0,0) is (0,0,1)")
+		{
+			REQUIRE(vectorEqual(sphere->sample(0, 0), geometry::point(0, 0, 1.0f)));
+			AND_THEN("Scaling the Sphere moves the point")
+			{
+				geometry::transform(*sphere, geometry::scaleMatrix(1, 1, 10.0f));
+				REQUIRE(vectorEqual(sphere->sample(0, 0), geometry::point(0, 0, 10.0f)));
+				REQUIRE(vectorEqual(sphere->sample(0.5, 0), geometry::point(1.0f, 0, 0)));
+			}
+			AND_THEN("Moving the sphere moves the point")
+			{
+				sphere->setWorldTransform(glm::mat4(1.0f)); // reset the sphere's transforms
+				geometry::transform(*sphere, geometry::translationMatrix(1.0f));
+				REQUIRE(vectorEqual(sphere->sample(0, 0), geometry::point(1.0f, 1.0f, 2.0f)));
+				REQUIRE(vectorEqual(sphere->sample(1.0f, 0), geometry::point(1.0f, 1.0f, 0.0f)));
+			}
 		}
 	}
 }
@@ -158,6 +193,40 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 			auto nHits = sphere->findIntersections(ray, hits);
 			REQUIRE(nHits == 2);
 			REQUIRE(areSame(hits[0].t + hits[1].t, 0.0f,FLT_EPSILON));
+		}
+	}
+}
+SCENARIO("Verifying Sphere Normals","[Sphere]")
+{
+	GIVEN("A Unit Sphere")
+	{
+		auto sphere = std::make_unique<geometry::Sphere>();
+		THEN("The normal at u=0 is <0,0,1>")
+		{
+			REQUIRE(vectorEqual(sphere->normal(0, 0), geometry::vector(0, 0, 1.0f)));
+			AND_THEN("the normal at u=1.0f is <0,0,-1.0f>")
+			{
+				REQUIRE(vectorEqual(sphere->normal(1.0f, 0), geometry::vector(0, 0, -1.0f)));
+			}
+		}
+		THEN("The normal at any point on the unmodified sphere is simply the coordinate on the sphere")
+		{
+			auto sphereNormalsValidated = true;
+			for (float u = 0; u <= 1.0f; u += 0.1f)
+			{
+				for (float v = 0; v <= 1.0f; v += 0.1f)
+				{
+					auto norm = sphere->normal(u, v);
+					auto coord = geometry::toVector(sphere->sample(u, v));
+					if (!vectorEqual(norm, coord))
+					{
+						sphereNormalsValidated = false;
+						logVector(norm);
+						logVector(coord);
+					}
+				}
+			}
+			REQUIRE(sphereNormalsValidated);
 		}
 	}
 }

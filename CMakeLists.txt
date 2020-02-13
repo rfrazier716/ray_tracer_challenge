@@ -23,15 +23,18 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 
 # Add source to this project's executable.
 
-# Adding Libraries
-add_library(canvas "src/canvas.cpp")
-add_library(transforms "src/geometry/transforms.cpp")
 # add_library(primitives "src/geometry/primitives.cpp")
 ## nurbs
 add_library(nurbc "src/geometry/nurbs/nurbc.cpp")
 
 ## Geometric Surfaces
 add_library(sphere "src/geometry/sphere.cpp")
+
+# Adding Libraries
+add_library(canvas "src/canvas.cpp")
+
+add_library(transforms "src/geometry/transforms.cpp")
+target_link_libraries(transforms sphere)
 
 
 # ---Building Examples ---

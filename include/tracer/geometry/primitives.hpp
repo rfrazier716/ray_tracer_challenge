@@ -38,8 +38,8 @@ namespace tracer
 		inline glm::vec4 point(float x, float y, float z) { return glm::vec4(x, y, z, 1); }
 		inline glm::vec4 vector(float x, float y, float z) { return glm::vec4(x, y, z, 0); }
 
-		inline void toPoint(glm::vec4& vect) { vect.w = 1;} // pass a vector by reference and set its weight to 1
-		inline void toVector(glm::vec4& p) { p.w = 0; } // pass a point by reference and set the weight to 0
+		inline glm::vec4 toPoint(glm::vec4& v) { return glm::vec4(v.x, v.y, v.z, 1.0f);} // pass a vector by reference and set its weight to 1
+		inline glm::vec4 toVector(glm::vec4& p) { return glm::vec4(p.x,p.y,p.z,0); } // pass a point by reference and set the weight to 0
 
 
 	}

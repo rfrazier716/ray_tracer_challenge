@@ -1,6 +1,7 @@
 #include "tracer/geometry/sphere.hpp"
 using namespace tracer;
 
+
 POINT geometry::Sphere::sample(float u, float v){
 	// required trig definitions calculated once for speed
 	float sinU = std::sin(F_PI * u);
@@ -11,13 +12,42 @@ POINT geometry::Sphere::sample(float u, float v){
 	float x = sinU * cosV;
 	float y = sinU * sinV;
 	float z = cosU;
-	return point(x, y, z);
+	//need to translate from object coordinates back into world coordinates before returning
+	return getWorldTransform()*point(x, y, z);
 }
 
 VECTOR geometry::Sphere::normal(float u, float v){
-	auto normalVect = sample(u, v); //sample the sphere at uv to get the point
-	toVector(normalVect); //Turn the sphere point into a vector
-	return normalVect; //return the vector which points from the origin to the sphere
+	// need to account for special cases when u=0 and u =1
+	VECTOR du;
+	VECTOR dv;
+	if (u == 1.0f)
+	{
+		//if u=1.0f must manually set the vectors because dv is the zero vector
+		du = geometry::vector(1, 0, 0);
+		dv = geometry::vector(0, -1, 0);
+	}
+	else if (u == 0.0f)
+	{
+		du = geometry::vector(-1, 0, 0);
+		dv = geometry::vector(0, -1, 0);
+	}
+	else 
+	{
+		auto sinU = std::sin(F_PI * u);
+		auto cosU = std::cos(F_PI * u);
+		auto sinV = std::sin(2 * F_PI * v);
+		auto cosV = std::cos(2 * F_PI * v);
+		du = geometry::vector(cosU * cosV, cosU * sinV, -sinU);
+		dv = geometry::vector(-sinU * sinV, sinU * cosV, 0);
+	}
+	//to get the world in normal space need to transform du and dv into world space and take dVxdU
+	du = getWorldTransform() * du;
+	dv = getWorldTransform() * dv;
+	auto norm = glm::vec4(glm::cross(du.xyz(), dv.xyz()),0); //the norm is also a vector
+	norm = glm::normalize(norm); //set the magnitude of the norm to 1.0f
+	return norm;
+	// TODO: The book describes the normal transform by taking the transpose of the world matrix but doesn't explain why, 
+	// This method has been derived and works, but uses more operations
 
 }
 
