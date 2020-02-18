@@ -228,5 +228,43 @@ SCENARIO("Verifying Sphere Normals","[Sphere]")
 			}
 			REQUIRE(sphereNormalsValidated);
 		}
+		AND_THEN("We scale the sphere to be zero in the Z direction")
+		{
+			geometry::transform(*sphere, geometry::scaleMatrix(1, 1, 0.0f));
+			THEN("The normals from u=[0,0.5) should be <0,0,1>")
+			{
+				auto sphereNormalsValidated = true;
+				for (float u = 0; u <0.5f; u += 0.1f)
+				{
+					for (float v = 0; v <= 1.0f; v += 0.1f)
+					{
+						auto norm = sphere->normal(u, v);
+						if (!vectorEqual(norm, geometry::vector(0,0,1)))
+						{
+							sphereNormalsValidated = false;
+							logVector(norm);
+						}
+					}
+				}
+				REQUIRE(sphereNormalsValidated);
+			}
+			THEN("The normals from u=(0.5,1] should be <0,0,-1>")
+			{
+				auto sphereNormalsValidated = true;
+				for (float u = 0.51f; u <=1.0f; u += 0.1f)
+				{
+					for (float v = 0; v <= 1.0f; v += 0.1f)
+					{
+						auto norm = sphere->normal(u, v);
+						if (!vectorEqual(norm, geometry::vector(0, 0, -1)))
+						{
+							sphereNormalsValidated = false;
+							logVector(norm);
+						}
+					}
+				}
+				REQUIRE(sphereNormalsValidated);
+			}
+		}
 	}
 }
