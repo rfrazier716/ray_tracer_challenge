@@ -25,28 +25,34 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 
 # add_library(primitives "src/geometry/primitives.cpp")
 ## nurbs
-add_library(nurbc "src/geometry/nurbs/nurbc.cpp")
+add_library(tracerGeometry STATIC
+"src/geometry/transforms.cpp"
+"src/geometry/sphere.cpp"
+"src/geometry/nurbs/nurbc.cpp"
+
+)
+#add_library(nurbc "src/geometry/nurbs/nurbc.cpp")
 
 ## Geometric Surfaces
-add_library(sphere "src/geometry/sphere.cpp")
+# add_library(sphere "src/geometry/sphere.cpp")
 
 # Adding Libraries
 add_library(canvas "src/canvas.cpp")
 
-add_library(transforms "src/geometry/transforms.cpp")
-target_link_libraries(transforms sphere)
+#add_library(transforms "src/geometry/transforms.cpp")
+#target_link_libraries(transforms sphere)
 
 
 # ---Building Examples ---
 
 # Projectile motion example
 add_executable(projectileMotion "src/examples/projectile_motion.cpp")
-target_link_libraries(projectileMotion canvas primitives)
+target_link_libraries(projectileMotion canvas)
 set_target_properties(projectileMotion PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 # Points around a clock face
 add_executable(clock "src/examples/clockFace.cpp")
-target_link_libraries(clock canvas primitives transforms)
+target_link_libraries(clock canvas tracerGeometry)
 set_target_properties(clock PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${EXAMPLE_BIN_DIRECTORY}")
 
 # ---Tests---
@@ -71,22 +77,22 @@ add_test(NAME Canvas COMMAND testCanvas)
 
 # Matrix Test
 add_executable(testMatrix "test/testMatrices.cpp")
-target_link_libraries(testMatrix Catch catch_main transforms)
+target_link_libraries(testMatrix Catch catch_main tracerGeometry)
 add_test(NAME Matrices COMMAND testMatrix)
 
 # NURBS Contour Test
 add_executable(testNurbsC "test/geometryTests/testNURBContour.cpp")
-target_link_libraries(testNurbsC Catch catch_main nurbc)
+target_link_libraries(testNurbsC Catch catch_main tracerGeometry)
 add_test(NAME NurbContour COMMAND testNurbsC)
 
 # Object Test
 add_executable(testObject "test/actorTests/testObject.cpp")
-target_link_libraries(testObject Catch catch_main nurbc)
+target_link_libraries(testObject Catch catch_main tracerGeometry)
 add_test(NAME ObjectClass COMMAND testObject)
 
 # Sphere Test
 add_executable(testSpheres "test/geometryTests/testSphere.cpp")
-target_link_libraries(testSpheres Catch catch_main sphere transforms)
+target_link_libraries(testSpheres Catch catch_main tracerGeometry)
 add_test(NAME sphereClass COMMAND testSpheres )
 
 # Ray Structure Test
