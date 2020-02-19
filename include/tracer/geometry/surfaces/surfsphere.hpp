@@ -9,7 +9,7 @@
 #include <iostream>
 
 /**
- * \class Sphere
+ * \class SphericalSurface
  *
  *
  * \brief A spherical surface class, assumes the origin of the sphere is at <0,0,0> and it has a radius of 1
@@ -26,7 +26,7 @@
 
 namespace tracer{
 	namespace geometry {
-		class Sphere {
+		class SphericalSurface {
 		private:
             glm::mat4 toWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
             glm::mat4 fromWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space

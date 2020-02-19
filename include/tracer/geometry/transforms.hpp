@@ -3,7 +3,7 @@
 #include <math.h>  //for trig functions
 
 #include "tracer/geometry/primitives.hpp"
-#include "tracer/geometry/sphere.hpp"
+#include "tracer/geometry/surfaces/surfsphere.hpp"
 
 namespace tracer
 {
@@ -28,6 +28,6 @@ namespace tracer
 		glm::vec4 scale(glm::vec4& tuple, glm::mat4& scaleMatrix);
 
 		//Transform matrixes for various geometries
-		void transform(Sphere& sphere,  glm::mat4 const& transformMatrix);
+		void transform(SphericalSurface& sphere,  glm::mat4 const& transformMatrix);
 	}
 }

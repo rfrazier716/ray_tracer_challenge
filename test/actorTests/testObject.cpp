@@ -1,4 +1,4 @@
-#include "tracer/actors/object.hpp"
+#include "tracer/core/actors/object.hpp"
 #include "tracer/geometry/primitives.hpp"
 
 #include "catch.hpp"

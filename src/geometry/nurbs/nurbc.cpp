@@ -9,7 +9,7 @@
 // once nurbs curves are defined, will need to be able to extend it to a nurbs surface
 // Also need to figure out how do to ray-nurbs intersections look at that paper https://www.cs.utah.edu/~shirley/papers/raynurbs.pdf
 
-#include "tracer/geometry/nurbs/nurbc.hpp"
+#include "tracer/geometry/surfaces/nurbs/nurbc.hpp"
 
 using namespace tracer;
 using namespace geometry;

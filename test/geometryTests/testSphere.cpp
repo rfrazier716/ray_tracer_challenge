@@ -1,4 +1,4 @@
-#include "tracer/geometry/sphere.hpp"
+#include "tracer/geometry/surfaces/surfsphere.hpp"
 #include "tracer/geometry/primitives.hpp" 
 #include "tracer/geometry/transforms.hpp"
 
@@ -22,11 +22,11 @@ void logVector(T vect)
 	std::cout << std::endl;
 }
 
-SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
+SCENARIO("Creating and probing a Sphere Object", "[SphericalSurface]")
 {
-	GIVEN("A new Sphere Object")
+	GIVEN("A new SphericalSurface Object")
 	{
-		auto sphereA = std::make_unique<geometry::Sphere>(); // create a new sphere object
+		auto sphereA = std::make_unique<geometry::SphericalSurface>(); // create a new sphere object
 		THEN("the value of the sphere at u=v=0 should be the point (0,0,1)")
 		{
 			REQUIRE(vectorEqual(sphereA->sample(0, 0), geometry::point(0, 0, 1)));
@@ -102,11 +102,11 @@ SCENARIO("Creating and probing a Sphere Object", "[Sphere]")
 
 	}
 }
-SCENARIO("Applying Transforms to a Sphere", "[Sphere]")
+SCENARIO("Applying Transforms to a Sphere", "[SphericalSurface]")
 {
 	GIVEN("A unit Sphere Object")
 	{
-		auto sphere = std::make_unique<geometry::Sphere>();
+		auto sphere = std::make_unique<geometry::SphericalSurface>();
 		THEN("The sphere's coordinates a (0,0) is (0,0,1)")
 		{
 			REQUIRE(vectorEqual(sphere->sample(0, 0), geometry::point(0, 0, 1.0f)));
@@ -126,14 +126,14 @@ SCENARIO("Applying Transforms to a Sphere", "[Sphere]")
 		}
 	}
 }
-SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
+SCENARIO("Verifying Ray Sphere intersections", "[SphericalSurface]")
 {
 	GIVEN("A ray at the (-10,0,0) pointing towards (1,0,0) and a unit sphere") 
 	{
 		auto ray = geometry::Ray{ 
 			geometry::point(-10, 0, 0), 
 			geometry::vector(1, 0, 0) };
-		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		auto sphere = std::make_unique<geometry::SphericalSurface>(); // declare a new sphere on the heap
 		THEN("The sphere should intersect the sphere at two points")
 		{
 			geometry::Intersection hits[2];
@@ -152,7 +152,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 		auto ray = geometry::Ray{
 			geometry::point(-10, 1, 0),
 			geometry::vector(1, 0, 0) };
-		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		auto sphere = std::make_unique<geometry::SphericalSurface>(); // declare a new sphere on the heap
 		geometry::transform(*sphere, geometry::scaleMatrix(10.0f, 1.0f, 1.0f));
 		THEN("The sphere should intersect the sphere at one point")
 		{
@@ -171,7 +171,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 		auto ray = geometry::Ray{
 			geometry::point(-10, 1.01f, 0),
 			geometry::vector(1, 0, 0) };
-		auto sphere = std::make_unique<geometry::Sphere>(); // declare a new sphere on the heap
+		auto sphere = std::make_unique<geometry::SphericalSurface>(); // declare a new sphere on the heap
 		THEN("The ray should not intersect the sphere")
 		{
 			geometry::Intersection hits[2];
@@ -182,7 +182,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 	//Edge Cases
 	GIVEN("A Ray inside of the sphere at the origin")
 	{
-		auto sphere = std::make_unique<geometry::Sphere>();
+		auto sphere = std::make_unique<geometry::SphericalSurface>();
 		auto ray = geometry::Ray{
 			geometry::point(0,0,0),
 			geometry::vector(0.1f,0.2f,0.4f)
@@ -196,11 +196,11 @@ SCENARIO("Verifying Ray Sphere intersections", "[Sphere]")
 		}
 	}
 }
-SCENARIO("Verifying Sphere Normals","[Sphere]")
+SCENARIO("Verifying Sphere Normals","[SphericalSurface]")
 {
 	GIVEN("A Unit Sphere")
 	{
-		auto sphere = std::make_unique<geometry::Sphere>();
+		auto sphere = std::make_unique<geometry::SphericalSurface>();
 		THEN("The normal at u=0 is <0,0,1>")
 		{
 			REQUIRE(vectorEqual(sphere->normal(0, 0), geometry::vector(0, 0, 1.0f)));

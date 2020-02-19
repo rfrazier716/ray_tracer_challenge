@@ -80,8 +80,8 @@ void Canvas::writePixel(int x, int y, COLOR color)
 
 void Canvas::writeCartesian(float x, float y, COLOR color)
 {
-	int xPx = width / 2 + x; 
-	int yPx = height / 2 - y;
+	int xPx = (int)std::round(width / 2 + x); 
+	int yPx = (int)std::round(height / 2 - y);
 	canvas[canvasIndex(xPx, yPx)] = color;
 }
 

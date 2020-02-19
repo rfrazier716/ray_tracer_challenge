@@ -1,5 +1,5 @@
 
-#include "tracer/geometry/nurbs/nurbc.hpp"
+#include "tracer/geometry/surfaces/nurbs/nurbc.hpp"
 #include "catch.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/epsilon.hpp"

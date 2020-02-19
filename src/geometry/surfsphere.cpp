@@ -1,8 +1,8 @@
-#include "tracer/geometry/sphere.hpp"
+#include "tracer/geometry/surfaces/surfsphere.hpp"
 using namespace tracer;
 
 
-POINT geometry::Sphere::sample(float u, float v){
+POINT geometry::SphericalSurface::sample(float u, float v){
 	// required trig definitions calculated once for speed
 	float sinU = std::sin(F_PI * u);
 	float cosU = std::cos(F_PI * u);
@@ -16,7 +16,7 @@ POINT geometry::Sphere::sample(float u, float v){
 	return getWorldTransform()*point(x, y, z);
 }
 
-VECTOR geometry::Sphere::normal(float u, float v){
+VECTOR geometry::SphericalSurface::normal(float u, float v){
 	// need to account for special cases when u=0 and u =1
 	VECTOR du;
 	VECTOR dv;
@@ -51,17 +51,17 @@ VECTOR geometry::Sphere::normal(float u, float v){
 
 }
 
-VECTOR geometry::Sphere::tangent(float u, float v){
+VECTOR geometry::SphericalSurface::tangent(float u, float v){
 	return vector(1,1,1); // this function needs to be filled in 
 }
 
-glm::vec2 geometry::Sphere::uvFromPoint(float x, float y, float z)
+glm::vec2 geometry::SphericalSurface::uvFromPoint(float x, float y, float z)
 {
 	auto point = geometry::point(x, y, z); //put the floats into a point
 	return uvFromPoint(point); // call the other UV from point function
 }
 
-glm::vec2 geometry::Sphere::uvFromPoint(glm::vec4 point)
+glm::vec2 geometry::SphericalSurface::uvFromPoint(glm::vec4 point)
 {
 	//have to subtract 1.0f from the point magnitude because the w component of a point is 1.0
 	//assert the point is on the unit sphere
@@ -74,16 +74,16 @@ glm::vec2 geometry::Sphere::uvFromPoint(glm::vec4 point)
 	return glm::vec2(u, v);
 }
 
-void geometry::Sphere::setWorldTransform(glm::mat4 const& transform) {
+void geometry::SphericalSurface::setWorldTransform(glm::mat4 const& transform) {
 	toWorldSpaceTMat = transform;
 	updateInverseTransform = true; //setter to tell object that it needs to modify it's inverse matrix
 }
 
-glm::mat4 geometry::Sphere::getWorldTransform() {
+glm::mat4 geometry::SphericalSurface::getWorldTransform() {
 	return toWorldSpaceTMat;
 }
 
-glm::mat4 geometry::Sphere::getObjectTransform() {
+glm::mat4 geometry::SphericalSurface::getObjectTransform() {
 	//recalculate the inverse matrix if the main transform has been updated since this was last called
 	if (updateInverseTransform)
 	{
@@ -92,7 +92,7 @@ glm::mat4 geometry::Sphere::getObjectTransform() {
 	return fromWorldSpaceTMat;
 }
 
-int geometry::Sphere::findIntersections(Ray ray, Intersection* intersections)
+int geometry::SphericalSurface::findIntersections(Ray ray, Intersection* intersections)
 {
 	// Transform the ray from world space to object space
 	ray.position = getWorldTransform() * ray.position;
