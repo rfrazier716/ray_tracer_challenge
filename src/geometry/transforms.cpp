@@ -1,3 +1,4 @@
+#include "..\..\include\tracer\geometry\transforms.hpp"
 #include "tracer/geometry/transforms.hpp"
 
 using namespace tracer;
@@ -84,6 +85,11 @@ using namespace tracer;
 	glm::mat4 geometry::shearMatrix(float shear)
 	{
 		return shearMatrix(shear, shear, shear, shear, shear, shear);
+	}
+
+	glm::vec4 tracer::geometry::reflect(const VECTOR r, const VECTOR normal)
+	{
+		return r - 2 * glm::dot(r, normal) * normal;
 	}
 
 	glm::vec4 geometry::translate(glm::vec4& tuple, glm::mat4& translationMatrix)

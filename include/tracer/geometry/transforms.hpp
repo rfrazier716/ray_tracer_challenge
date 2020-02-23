@@ -22,6 +22,12 @@ namespace tracer
 		glm::mat4 shearMatrix(float xy, float xz, float yx, float yz, float zx, float zy);
 		glm::mat4 shearMatrix(float shear);
 
+		/**
+		* Reflects vector about normal 
+		*
+		*/
+		glm::vec4 reflect(const VECTOR r,const VECTOR normal);
+
 
 		glm::vec4 translate(glm::vec4& tuple, glm::mat4& translationMatrix);
 		glm::vec4 rotate(glm::vec4& tuple, glm::mat4& rotationMatrix);
