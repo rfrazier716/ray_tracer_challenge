@@ -7,6 +7,7 @@
 #include "glm/gtc/epsilon.hpp"
 
 using namespace tracer;
+/*
 SCENARIO("Creating and probing an object", "[Object]")
 {
 	GIVEN("A new Object instance")
@@ -18,3 +19,4 @@ SCENARIO("Creating and probing an object", "[Object]")
 		}
 	}
 }
+*/

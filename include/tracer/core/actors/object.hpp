@@ -15,6 +15,7 @@ namespace tracer
 {
     namespace actor
     {
+        template <class T>
         class Object
         {
         private:
@@ -25,6 +26,12 @@ namespace tracer
             * Returns the world coordinate of the Object
             */
             auto getWorldCoordinate() { return worldCoordinate; }
+
+            /**
+            * 
+            * 
+            *
+            */
 
         };
     }

@@ -1,4 +1,4 @@
-#include "tracer/geometry/surfaces/surfsphere.hpp"
+#include "tracer/geometry/surfaces/uvsurface.hpp"
 #include "tracer/geometry/primitives.hpp" 
 #include "tracer/geometry/transforms.hpp"
 

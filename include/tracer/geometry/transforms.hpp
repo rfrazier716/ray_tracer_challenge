@@ -3,7 +3,7 @@
 #include <math.h>  //for trig functions
 
 #include "tracer/geometry/primitives.hpp"
-#include "tracer/geometry/surfaces/surfsphere.hpp"
+#include "tracer/geometry/surfaces/uvsurface.hpp"
 
 namespace tracer
 {

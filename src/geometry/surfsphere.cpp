@@ -1,4 +1,4 @@
-#include "tracer/geometry/surfaces/surfsphere.hpp"
+#include "tracer/geometry/surfaces/uvsurface.hpp"
 using namespace tracer;
 
 
