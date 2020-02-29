@@ -78,10 +78,10 @@ add_executable(testNurbsC "test/geometryTests/testNURBContour.cpp")
 target_link_libraries(testNurbsC Catch catch_main tracerCore)
 add_test(NAME NurbContour COMMAND testNurbsC)
 
-# Object Test
-add_executable(testObject "test/actorTests/testObject.cpp")
-target_link_libraries(testObject Catch catch_main tracerCore)
-add_test(NAME ObjectClass COMMAND testObject)
+# Solid Body Test
+add_executable(testSolids "test/actorTests/testsolidbodies.cpp")
+target_link_libraries(testSolids Catch catch_main tracerCore)
+add_test(NAME ObjectClass COMMAND testSolids)
 
 # Sphere Test
 add_executable(testSpheres "test/geometryTests/testSphere.cpp")

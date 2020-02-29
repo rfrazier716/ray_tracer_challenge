@@ -1,4 +1,6 @@
 #include "..\..\include\tracer\geometry\transforms.hpp"
+#include "..\..\include\tracer\geometry\transforms.hpp"
+#include "..\..\include\tracer\geometry\transforms.hpp"
 #include "tracer/geometry/transforms.hpp"
 
 using namespace tracer;
@@ -107,7 +109,12 @@ using namespace tracer;
 		return  scaleMatrix * tuple;
 	}
 
-	void geometry::transform(geometry::SphericalSurface& sphere,  glm::mat4 const& transformMatrix)
+	void geometry::transform(actor::SolidBody& body, glm::mat4 const& transformMatrix)
 	{
-		sphere.setWorldTransform(transformMatrix*sphere.getWorldTransform());
+		geometry::transform(*(body.geometry), transformMatrix);
+	}
+
+	void geometry::transform(geometry::UVSurface& surface, glm::mat4 const& transformMatrix)
+	{
+		surface.setWorldTransform(transformMatrix * surface.getWorldTransform());
 	}
