@@ -66,30 +66,12 @@ glm::vec2 geometry::SphericalSurface::uvFromPoint(glm::vec4 point)
 	//have to subtract 1.0f from the point magnitude because the w component of a point is 1.0
 	//assert the point is on the unit sphere
 	auto pointMagnitude = glm::dot(point, point) - 1.0f;
-	assert(areSame(glm::dot(point,point)-1.0f, 1.0f, FLT_EPSILON) || !(std::cerr << point.x <<","<< point.y << "," << point.z << "," << point.w ));
+	assert(areSame(glm::dot(point,point)-1.0f, 1.0f, FLT_EPSILON) || !(std::cerr << point.x <<","<< point.y << "," << point.z << "," << point.w << "is not on the unit sphere"));
 	auto theta = std::acos(point.z); 
 	auto phi = std::atan2(point.y, point.x);
 	auto u = theta / F_PI;
 	auto v = phi / (2 * F_PI);
 	return glm::vec2(u, v);
-}
-
-void geometry::SphericalSurface::setWorldTransform(glm::mat4 const& transform) {
-	toWorldSpaceTMat = transform;
-	updateInverseTransform = true; //setter to tell object that it needs to modify it's inverse matrix
-}
-
-glm::mat4 geometry::SphericalSurface::getWorldTransform() {
-	return toWorldSpaceTMat;
-}
-
-glm::mat4 geometry::SphericalSurface::getObjectTransform() {
-	//recalculate the inverse matrix if the main transform has been updated since this was last called
-	if (updateInverseTransform)
-	{
-		fromWorldSpaceTMat = glm::inverse(toWorldSpaceTMat);
-	}
-	return fromWorldSpaceTMat;
 }
 
 int geometry::SphericalSurface::findIntersections(Ray ray, Intersection* intersections)

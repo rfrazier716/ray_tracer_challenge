@@ -26,6 +26,7 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 # Library for Ray Tracer Geometry
 add_library(tracerGeometry STATIC
 "src/geometry/transforms.cpp"
+"src/geometry/uvsurface.cpp"
 "src/geometry/surfsphere.cpp"
 "src/geometry/nurbs/nurbc.cpp"
 )

@@ -27,6 +27,13 @@ namespace tracer
             float vMax = 1.0f;
 
         public:
+            void setWorldTransform(glm::mat4 const& transform);
+            glm::mat4 getWorldTransform() { return toWorldSpaceTMat; } //!< returns the value of the world transform matrix
+            glm::mat4 getObjectTransform();
+            POINT getOrigin() { return getWorldTransform() * geometry::point(0, 0, 0); }//!< returns the object origin in world space
+            
+            
+
             virtual POINT sample(float u, float v) { return point(0, 0, 0); } //!<returns the cartesian coordinate of the surface at the specificed u,v coordinate
             virtual POINT sample(glm::vec2 uv) { return point(0, 0, 0) ;}
 
@@ -38,9 +45,8 @@ namespace tracer
 
 
 
-            virtual void setWorldTransform(glm::mat4 const& transform) {} //!< sets the world transform matrix, will overwrite the current matrix
-            virtual glm::mat4 getWorldTransform() { return glm::mat4(1.0f) ;} //!< returns the value of the world transform matrix
-            virtual glm::mat4 getObjectTransform() { return glm::mat4(1.0f) ;} //!< returns the value of the object space transform matrix 
+
+
 
             /**
             * /brief find the intersections between the surface and the sphere
@@ -78,12 +84,6 @@ namespace tracer
 
             VECTOR tangent(float u, float v); //!< returns the unit tangent bector of the sphere at coordinate u,v
             //VECTOR tangent(glm::vec2 uv);
-
-
-
-            void setWorldTransform(glm::mat4 const& transform); //!< sets the world transform matrix, will overwrite the current matrix
-            glm::mat4 getWorldTransform(); //!< returns the value of the world transform matrix
-            glm::mat4 getObjectTransform(); //!< returns the value of the object space transform matrix
 
             /**
             * /brief find the intersections between a ray object and the sphere
