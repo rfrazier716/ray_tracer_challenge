@@ -11,6 +11,16 @@
 using namespace tracer;
 using namespace geometry;
 
+template<class T>
+void logVector(T vect)
+{
+    for (int j = 0; j < vect.length(); j++)
+    {
+        std::cout << vect[j] << " ";
+    }
+    std::cout << std::endl;
+}
+
 //NOTE: GLM USES COLUMN MAJOR MATRICES, WHICH IS EASIER FOR ACCESSING COLUMNS IN GRAPHICS MEMORY. HOWEVER THE BOOK USES ROW MAJOR MATRICES
 template <class T>
 bool matricesEqual(T& matrixA, T& matrixB)
@@ -238,6 +248,14 @@ SCENARIO("Cross Product Matrix" "[matrices]")
 
 SCENARIO("Rotation Matrix", "[matrices]")
 {
+    GIVEN("A Rotation matrix about the X axis 180 degree")
+    {
+        auto rotMat = rotationMatrix(tracer::toRad(180), X_AXIS);
+        THEN("The W dimension multiplyer should stay as 1, not negative one")
+        {
+            REQUIRE(rotMat[3].w == 1.0f);
+        }
+    }
     GIVEN("A vector <1,0,1>")
     {
         auto testVect = vector(1, 0, 1);
@@ -370,6 +388,30 @@ SCENARIO("Shearing Matrix", "[matrices]")
         {
             auto transform = shearMatrix(0, 0, 0, 0, 0, 1);
             REQUIRE(vectorsEqual(transform * p, point(2, 3, 7)));
+        }
+    }
+}
+
+SCENARIO("Combining Transforms", "[matrices]")
+{
+    GIVEN("A translation matrix and a rotation matrix")
+    {
+        auto translate = geometry::translationMatrix(0, 1.0f, 1.0f);
+        auto rotate = geometry::rotationMatrix(F_PI, X_AXIS);
+        THEN("Translating a point at the origin to (0,1,1) and rotation by 180 degrees moves the point to (0,-1,-1)")
+        {
+            auto transform = rotate * translate;
+            auto transformedPoint = transform * geometry::point(0, 0, 0);
+            logVector(transformedPoint);
+            logVector(geometry::point(0, -1.0f, -1.0f));
+            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, -1.0f, -1.0f)));
+        }
+        THEN("Rotation a point at the origin by 180 degrees and translating to (0,1,1) moves the point to (0,1,1)")
+        {
+            auto transform = translate * rotate;
+            auto transformedPoint = transform * geometry::point(0, 0, 0);
+            logVector(transformedPoint);
+            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, 1, 1)));
         }
     }
 }

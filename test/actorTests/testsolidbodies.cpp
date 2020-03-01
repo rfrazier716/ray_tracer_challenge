@@ -28,7 +28,7 @@ SCENARIO("Creating and probing a UVSphere", "[Object]")
 		}
 		THEN("Applying a transform to the sphere properly transforms the geometry")
 		{
-			geometry::transform(sphere, geometry::scaleMatrix(10.0f)); //Scale the sphere by 10 in XYZ
+			geometry::transform(*(sphere.geometry), geometry::scaleMatrix(10.0f)); //Scale the sphere by 10 in XYZ
 			REQUIRE(vectorEqual(sphere.geometry->sample(0, 0),geometry::point(0, 0, 10.0f)));
 		}
 

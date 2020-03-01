@@ -5,9 +5,9 @@
 #define POINT glm::vec4
 #define VECTOR glm::vec4
 
-#define X_AXIS vector(1,0,0)
-#define Y_AXIS vector(0,1,0)
-#define Z_AXIS vector(0,0,1)
+#define X_AXIS geometry::vector(1,0,0)
+#define Y_AXIS geometry::vector(0,1,0)
+#define Z_AXIS geometry::vector(0,0,1)
 
 namespace tracer 
 {

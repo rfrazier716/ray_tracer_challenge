@@ -16,6 +16,9 @@ namespace tracer
         *
         */
         class UVSurface {
+        private:
+            POINT origin = point(0, 0, 0);
+            VECTOR orientation = vector(0, 0, 1);
         protected:
             //Protected variables that the inherited classes will use
             glm::mat4 toWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
@@ -30,9 +33,8 @@ namespace tracer
             void setWorldTransform(glm::mat4 const& transform);
             glm::mat4 getWorldTransform() { return toWorldSpaceTMat; } //!< returns the value of the world transform matrix
             glm::mat4 getObjectTransform();
-            POINT getOrigin() { return getWorldTransform() * geometry::point(0, 0, 0); }//!< returns the object origin in world space
-            
-            
+            POINT getWorldOrigin() { return origin; }//!< returns the object origin in world space
+            VECTOR getWorldOrientation() { return orientation; }
 
             virtual POINT sample(float u, float v) { return point(0, 0, 0); } //!<returns the cartesian coordinate of the surface at the specificed u,v coordinate
             virtual POINT sample(glm::vec2 uv) { return point(0, 0, 0) ;}
@@ -43,13 +45,9 @@ namespace tracer
             virtual VECTOR tangent(float u, float v) { return vector(0, 0, 0) ;} //!< returns the unit tangent bector of the sphere at coordinate u,v
             virtual VECTOR tangent(glm::vec2 uv) { return vector(0, 0, 0) ;}
 
-
-
-
-
-
             /**
-            * /brief find the intersections between the surface and the sphere
+            * /brief find the intersections between the surface and the ray
+            *   The returned value is the number of intersections, each intersection will be inserted into the intersections array passed as an argument
             *
             */
             virtual int findIntersections(Ray ray, Intersection* intersections) { return 0 ;}
@@ -77,14 +75,7 @@ namespace tracer
             glm::vec2 uvFromPoint(glm::vec4 point);
         public:
             POINT sample(float u, float v); //!<returns the cartesian coordinate of the sphere at the specificed u,v coordinate
-            //POINT sample(glm::vec2 uv);
-
             VECTOR normal(float u, float v); //!< returns the unit normal vector of the sphere at coordinate u,v
-            //VECTOR normal(glm::vec2 uv);
-
-            VECTOR tangent(float u, float v); //!< returns the unit tangent bector of the sphere at coordinate u,v
-            //VECTOR tangent(glm::vec2 uv);
-
             /**
             * /brief find the intersections between a ray object and the sphere
             *
@@ -97,6 +88,26 @@ namespace tracer
             * 1 intersection - the ray is a tangent line to the sphere, both values of the intersection array return the same value
             * 2 intersections - the ray passes through the sphere at a point that is not tangent to the surface, returns two distinct values
             *
+            */
+            int findIntersections(Ray ray, Intersection* intersections);
+        };
+
+        class PointSurface : public UVSurface
+        {
+        public:
+            POINT sample(float u, float v) { return getWorldOrigin();} //!<A point sampled anywhere is just the point's origin
+            VECTOR normal(float u, float v) { return geometry::vector(0, 0, 1); } //!< Technically a point has no normal so return z-hat
+            /**
+            * /brief find the intersections between a ray object and the point
+            *
+            * the ray and a pointer to the intersection array is passed as function arguments.
+            * The return argument is an int with how many intersections occured
+            * The ray that is passed should be represented in the world coordinate space, locally the function will transform it into object space
+            *
+            * possible outcomes are:
+            * 0 intersections - the intersection array is not modified, the function returns false;
+            * 1 intersection - the ray hits the point
+            * 
             */
             int findIntersections(Ray ray, Intersection* intersections);
         };

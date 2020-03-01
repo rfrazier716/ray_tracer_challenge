@@ -27,12 +27,13 @@ include_directories ("include/glm-0.9.9.7/glm") # Directory for opengl Math libr
 add_library(tracerGeometry STATIC
 "src/geometry/transforms.cpp"
 "src/geometry/uvsurface.cpp"
-"src/geometry/surfsphere.cpp"
 "src/geometry/nurbs/nurbc.cpp"
 )
 
+# Library for Ray Tracer Core Package
 add_library(tracerCore STATIC
 "src/canvas.cpp"
+"src/actors/lights.cpp"
 )
 target_link_libraries(tracerCore tracerGeometry)
 
@@ -89,7 +90,17 @@ add_executable(testSpheres "test/geometryTests/testSphere.cpp")
 target_link_libraries(testSpheres Catch catch_main tracerCore)
 add_test(NAME sphereClass COMMAND testSpheres )
 
+# Point Surface Test
+add_executable(testPointSurface "test/geometryTests/testPointSurface.cpp")
+target_link_libraries(testPointSurface Catch catch_main tracerCore)
+add_test(NAME pointsurface COMMAND testPointSurface )
+
 # Ray Structure Test
 add_executable(testRay "test/geometryTests/testRay.cpp")
 target_link_libraries(testRay Catch catch_main)
 add_test(NAME rayStruct COMMAND testRay)
+
+# Light Tests
+add_executable(testlights "test/actorTests/testlightsources.cpp")
+target_link_libraries(testlights Catch catch_main tracerCore)
+add_test(NAME lights COMMAND testlights )

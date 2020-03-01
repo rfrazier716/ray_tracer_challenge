@@ -4,6 +4,7 @@
 
 #include "tracer/geometry/primitives.hpp"
 #include "tracer/core/actors/solidbody.hpp"
+#include "tracer/core/actors/lights.hpp"
 
 namespace tracer
 {
@@ -34,7 +35,6 @@ namespace tracer
 		glm::vec4 scale(glm::vec4& tuple, glm::mat4& scaleMatrix);
 
 		//Transform matrixes for various geometries
-		void transform(actor::SolidBody &body,  glm::mat4 const& transformMatrix);
 		void transform(geometry::UVSurface& surface, glm::mat4 const& transformMatrix);
 	}
 }

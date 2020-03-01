@@ -1,6 +1,7 @@
 #include "..\..\include\tracer\geometry\transforms.hpp"
 #include "..\..\include\tracer\geometry\transforms.hpp"
 #include "..\..\include\tracer\geometry\transforms.hpp"
+#include "..\..\include\tracer\geometry\transforms.hpp"
 #include "tracer/geometry/transforms.hpp"
 
 using namespace tracer;
@@ -49,7 +50,9 @@ using namespace tracer;
 		auto outer = glm::outerProduct(u, u);
 		//identity matrix 
 		auto eye = glm::mat4(1.0f);
-		return cosT * eye + sinT * ux + (1 - cosT) * outer;
+		auto rotMat = cosT * eye + sinT * ux + (1 - cosT) * outer;
+		rotMat[3].w = 1.0f; // have to force the w component to be 1.0f or it can go negative
+		return rotMat;
 
 	}
 
@@ -108,12 +111,18 @@ using namespace tracer;
 	{
 		return  scaleMatrix * tuple;
 	}
+/*
+* These are commented out because the geometry library should be independent of the tracer core library
+	void tracer::geometry::transform(actor::Light& light, glm::mat4 const& transformMatrix)
+	{
+		geometry::transform(*(light.geometry), transformMatrix);
+	}
 
 	void geometry::transform(actor::SolidBody& body, glm::mat4 const& transformMatrix)
 	{
 		geometry::transform(*(body.geometry), transformMatrix);
 	}
-
+*/
 	void geometry::transform(geometry::UVSurface& surface, glm::mat4 const& transformMatrix)
 	{
 		surface.setWorldTransform(transformMatrix * surface.getWorldTransform());
