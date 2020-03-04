@@ -162,7 +162,7 @@ SCENARIO("Verifying Ray Sphere intersections", "[SphericalSurface]")
 			AND_THEN("The hits should be unique and at t=8 and t=10")
 			{
 				REQUIRE(hits[0].t == hits[1].t);
-				REQUIRE(areSame(hits[0].t, 10.0f, FLT_EPSILON));
+				REQUIRE(areSame(hits[0].t, 10.0f, 1e-6f));
 			}
 		}
 	}

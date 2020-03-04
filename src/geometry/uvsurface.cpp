@@ -95,8 +95,8 @@ glm::vec2 geometry::SphericalSurface::uvFromPoint(glm::vec4 point)
 int geometry::SphericalSurface::findIntersections(Ray ray, Intersection* intersections)
 {
 	// Transform the ray from world space to object space
-	ray.position = getWorldTransform() * ray.position;
-	ray.direction = getWorldTransform() * ray.direction;
+	ray.position = getObjectTransform() * ray.position;
+	ray.direction = getObjectTransform() * ray.direction;
 	// the number of intersections is solved by the discriminant of the square root 
 	// descriminant=0	1 intersection
 	// descriminant>0	2 intersections
@@ -111,7 +111,7 @@ int geometry::SphericalSurface::findIntersections(Ray ray, Intersection* interse
 	{
 		return 0; // there is no intersection, do not modify intersection array
 	}
-	else if (areSame(discriminant, 0.0f, FLT_EPSILON))
+	else if (areSame(discriminant, 0.0f, 1.0e-6f))
 	{
 		//if the discriminant is zero there is one root
 		auto t = -b / (2 * a);
