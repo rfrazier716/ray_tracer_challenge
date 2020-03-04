@@ -2,4 +2,7 @@
 
 #include "./primitives.hpp"
 #include "./transforms.hpp"
-#include "./nurbs/nurbs.hpp"
+
+//All defined surfaces
+#include "./surfaces/nurbs/nurbs.hpp"
+#include "./surfaces/uvsurface.hpp"

@@ -1,7 +1,4 @@
-#include "tracer/geometry/primitives.hpp"
-#include "tracer/geometry/transforms.hpp"
-#include "tracer/math.hpp"
-#include "tracer/core/actors/solidbody.hpp"
+#include "tracer/tracer.hpp" //Include the tracer core library
 
 #include "catch.hpp"
 #include "glm/glm.hpp"
@@ -67,7 +64,6 @@ SCENARIO("Raycasting into a vector of solidbodies")
 				for (int j = 0; j < numHits; j++)
 				{
 					hits.push_back(bodyInterX[j]);
-					std::cout << bodyInterX[j].t << std::endl;
 				}
 			}
 		}

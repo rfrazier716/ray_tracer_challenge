@@ -1,3 +1,4 @@
+#pragma once
 #include "tracer/colors.hpp"
 
 namespace tracer

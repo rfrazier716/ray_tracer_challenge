@@ -43,3 +43,5 @@ public:
 	void blank(); //blanks the canvas to all black
 	int generateImage(ExportFormat format = ExportFormat::bmp);
 };
+
+typedef std::unique_ptr<Canvas> canvasPtr;
