@@ -14,12 +14,12 @@ namespace tracer
 	//converts radians to degrees
 	
 	template<class T>
-	inline bool vectorEqual(T vecA, T vecB) 
+	inline bool vectorEqual(T vecA, T vecB, float epsilon = 1e-6f) 
 	{ 
 		return glm::all(glm::epsilonEqual(
 			vecA, 
 			vecB, 
-			T(glm::max(glm::abs(vecA),glm::abs(vecB))/1000.0f)
+			T(epsilon)
 		)); 
 	}
 

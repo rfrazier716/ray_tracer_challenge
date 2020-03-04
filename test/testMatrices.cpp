@@ -402,16 +402,13 @@ SCENARIO("Combining Transforms", "[matrices]")
         {
             auto transform = rotate * translate;
             auto transformedPoint = transform * geometry::point(0, 0, 0);
-            logVector(transformedPoint);
-            logVector(geometry::point(0, -1.0f, -1.0f));
-            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, -1.0f, -1.0f)));
+            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, -1.0f, -1.0f),0.001f));
         }
         THEN("Rotation a point at the origin by 180 degrees and translating to (0,1,1) moves the point to (0,1,1)")
         {
             auto transform = translate * rotate;
             auto transformedPoint = transform * geometry::point(0, 0, 0);
-            logVector(transformedPoint);
-            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, 1, 1)));
+            REQUIRE(vectorEqual(transformedPoint, geometry::point(0, 1, 1),0.001f));
         }
     }
 }

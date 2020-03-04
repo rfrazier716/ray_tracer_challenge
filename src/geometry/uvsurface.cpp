@@ -65,7 +65,7 @@ VECTOR geometry::SphericalSurface::normal(float u, float v) {
 	//to get the world in normal space need to transform du and dv into world space and take dVxdU
 	du = getWorldTransform() * du;
 	dv = getWorldTransform() * dv;
-	auto norm = glm::vec4(glm::cross(du.xyz(), dv.xyz()), 0); //the norm is also a vector
+	auto norm = glm::vec4(glm::cross(du.xyz(), dv.xyz()), 0.0f); //the norm is also a vector
 	norm = glm::normalize(norm); //set the magnitude of the norm to 1.0f
 	return norm;
 	// TODO: The book describes the normal transform by taking the transpose of the world matrix but doesn't explain why, 

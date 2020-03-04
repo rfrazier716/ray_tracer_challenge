@@ -195,6 +195,22 @@ SCENARIO("Verifying Ray Sphere intersections", "[SphericalSurface]")
 			REQUIRE(areSame(hits[0].t + hits[1].t, 0.0f,FLT_EPSILON));
 		}
 	}
+	GIVEN("A Ray and a translated Sphere at (10,0,0)")
+	{
+		auto sphere = std::make_unique<geometry::SphericalSurface>();
+		geometry::transform(*sphere, geometry::translationMatrix(10.0f, 0, 0));
+		auto ray = geometry::Ray{
+			geometry::point(0,0,0),
+			geometry::vector(1.0f,0,0)
+		};
+		THEN("The ray should intersect the sphere at t=9 and t=11")
+		{
+			geometry::Intersection hits[2];
+			auto nHits = sphere->findIntersections(ray, hits);
+			REQUIRE(nHits == 2);
+			REQUIRE(hits[0].t+hits[1].t==20.0f);
+		}
+	}
 }
 SCENARIO("Verifying Sphere Normals","[SphericalSurface]")
 {
@@ -218,7 +234,7 @@ SCENARIO("Verifying Sphere Normals","[SphericalSurface]")
 				{
 					auto norm = sphere->normal(u, v);
 					auto coord = geometry::toVector(sphere->sample(u, v));
-					if (!vectorEqual(norm, coord))
+					if (!vectorEqual(norm, coord,1e-6f))
 					{
 						sphereNormalsValidated = false;
 						logVector(norm);

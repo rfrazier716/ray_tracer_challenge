@@ -97,7 +97,7 @@ add_test(NAME pointsurface COMMAND testPointSurface )
 
 # Ray Structure Test
 add_executable(testRay "test/geometryTests/testRay.cpp")
-target_link_libraries(testRay Catch catch_main)
+target_link_libraries(testRay Catch catch_main tracerCore)
 add_test(NAME rayStruct COMMAND testRay)
 
 # Light Tests

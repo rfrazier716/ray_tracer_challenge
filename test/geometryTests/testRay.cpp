@@ -1,12 +1,19 @@
 #include "tracer/geometry/primitives.hpp"
+#include "tracer/geometry/transforms.hpp"
 #include "tracer/math.hpp"
+#include "tracer/core/actors/solidbody.hpp"
 
 #include "catch.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/epsilon.hpp"
 
+#include <vector>
+#include <memory>
+#include <iostream>
+
 
 using namespace tracer;
+typedef std::unique_ptr<actor::SolidBody> solidBodyPtr;
 
 SCENARIO("Defining a new Ray structure ", "[rayTest]")
 {
@@ -31,5 +38,38 @@ SCENARIO("Defining a new Ray structure ", "[rayTest]")
 			}
 		}
 
+	}
+}
+
+SCENARIO("Raycasting into a vector of solidbodies")
+{
+	GIVEN("a Std::vector of solidbody pointers along the x-Axis")
+	{
+		auto nSpheres = 10;
+		std::vector<solidBodyPtr> bodies;
+		bodies.reserve(nSpheres);
+		// the [] is a lambda expression
+		std::generate_n(std::back_inserter(bodies), nSpheres, [] { return std::make_unique<actor::UVSphere>(); });
+		for (unsigned int i = 0; i < bodies.size(); i++)
+		{
+			geometry::transform(*(bodies[i]->geometry), geometry::translationMatrix(5.0f*i, 0, 0));
+		}
+		THEN("A ray cast into the bodies should return a group of hits that can be sorted by distance")
+		{
+			auto ray = geometry::Ray{ geometry::point(-10,0,0),geometry::vector(1,0,0) };
+			std::vector<geometry::Intersection> hits;
+			hits.reserve(2 * bodies.size()); //a sphere should have at max 2 intersections 
+			geometry::Intersection bodyInterX[2];
+			for (unsigned int i = 0; i < bodies.size(); i++)
+			{
+				//iterate over the bodies and fill the intersection array
+				auto numHits=bodies[i]->geometry->findIntersections(ray, bodyInterX);
+				for (int j = 0; j < numHits; j++)
+				{
+					hits.push_back(bodyInterX[j]);
+					std::cout << bodyInterX[j].t << std::endl;
+				}
+			}
+		}
 	}
 }

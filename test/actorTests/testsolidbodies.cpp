@@ -8,7 +8,7 @@
 #include "glm/gtc/epsilon.hpp"
 
 using namespace tracer;
-
+typedef std::unique_ptr<actor::SolidBody> solidBodyPtr;
 SCENARIO("Creating and probing a UVSphere", "[Object]")
 {
 	GIVEN("A new Sphere instance")
@@ -32,5 +32,25 @@ SCENARIO("Creating and probing a UVSphere", "[Object]")
 			REQUIRE(vectorEqual(sphere.geometry->sample(0, 0),geometry::point(0, 0, 10.0f)));
 		}
 
+	}
+}
+SCENARIO("Creating a Vectore of SolidBodyPointers")
+{
+	GIVEN("a Std::vector of solidbody pointers along the x-Axis")
+	{
+		auto nSpheres = 10;
+		std::vector<solidBodyPtr> bodies;
+		bodies.reserve(nSpheres);
+		// the [] is a lambda expression
+		std::generate_n(std::back_inserter(bodies), nSpheres, [] { return std::make_unique<actor::UVSphere>(); });
+		THEN("Iterating over the vector should be able to update the location of each body")
+		{
+			auto testPassed = true;
+			for (auto i = 0; i < bodies.size(); i++)
+			{
+				geometry::transform(*(bodies[i]->geometry), geometry::translationMatrix((float)i, 0, 0));
+				if (bodies[i]->geometry->getWorldOrigin()[0] != i) testPassed = false;
+			}
+		}
 	}
 }

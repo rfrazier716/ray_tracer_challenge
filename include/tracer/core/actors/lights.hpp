@@ -4,6 +4,7 @@
 
 #include "tracer/colors.hpp"
 #include "tracer/geometry/primitives.hpp"
+#include "tracer/geometry/transforms.hpp"
 #include "tracer/geometry/surfaces/uvsurface.hpp"
 
 namespace tracer {
@@ -33,5 +34,10 @@ namespace tracer {
 				return brightness;
 			};
 		};
+	}
+	namespace geometry
+	{
+		void transform(actor::Light& light, glm::mat4 const& transformMatrix); //!< Transform function for a light object
+		//Defined here to separate geometry library dependence on actor library
 	}
 }
