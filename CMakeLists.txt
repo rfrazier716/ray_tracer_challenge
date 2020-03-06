@@ -34,6 +34,7 @@ add_library(tracerGeometry STATIC
 add_library(tracerCore STATIC
 "src/canvas.cpp"
 "src/actors/lights.cpp"
+"src/actors/cameras.cpp"
 )
 target_link_libraries(tracerCore tracerGeometry)
 
@@ -104,3 +105,8 @@ add_test(NAME rayStruct COMMAND testRay)
 add_executable(testlights "test/actorTests/testlightsources.cpp")
 target_link_libraries(testlights Catch catch_main tracerCore)
 add_test(NAME lights COMMAND testlights )
+
+# Camera Tests
+add_executable(testcameras "test/actorTests/testcameras.cpp")
+target_link_libraries(testcameras Catch catch_main tracerCore)
+add_test(NAME cameras COMMAND testcameras )

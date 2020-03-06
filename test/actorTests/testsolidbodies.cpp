@@ -46,7 +46,7 @@ SCENARIO("Creating a Vectore of SolidBodyPointers")
 		THEN("Iterating over the vector should be able to update the location of each body")
 		{
 			auto testPassed = true;
-			for (auto i = 0; i < bodies.size(); i++)
+			for (unsigned int i = 0; i < bodies.size(); i++)
 			{
 				geometry::transform(*(bodies[i]->geometry), geometry::translationMatrix((float)i, 0, 0));
 				if (bodies[i]->geometry->getWorldOrigin()[0] != i) testPassed = false;

@@ -13,11 +13,11 @@ namespace tracer
 {
 	namespace geometry 
 	{
-		struct Ray
+		typedef struct 
 		{
 			POINT position;
 			POINT direction;
-		};
+		} Ray, *pRay;
 		static POINT sampleRay(Ray ray, float t) { return ray.position + t * ray.direction; }
 
 		/**

@@ -15,43 +15,44 @@ namespace tracer
         * A surface that can be sampled anywhere over the interval u=[0,1] and v=[0,1]
         *
         */
-        class UVSurface {
-        private:
-            POINT origin = point(0, 0, 0);
-            VECTOR orientation = vector(0, 0, 1);
-        protected:
-            //Protected variables that the inherited classes will use
-            glm::mat4 toWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
-            glm::mat4 fromWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
-            bool updateInverseTransform = false; //!< Whether or ne the world space transform needs to be updated
-            float uMin = 0;
-            float uMax = 1.0f;
-            float vMin = 0;
-            float vMax = 1.0f;
+        typedef
+            class UVSurface {
+            private:
+                POINT origin = point(0, 0, 0);
+                VECTOR orientation = vector(0, 0, 1);
+            protected:
+                //Protected variables that the inherited classes will use
+                glm::mat4 toWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
+                glm::mat4 fromWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
+                bool updateInverseTransform = false; //!< Whether or ne the world space transform needs to be updated
+                float uMin = 0;
+                float uMax = 1.0f;
+                float vMin = 0;
+                float vMax = 1.0f;
 
-        public:
-            void setWorldTransform(glm::mat4 const& transform);
-            glm::mat4 getWorldTransform() { return toWorldSpaceTMat; } //!< returns the value of the world transform matrix
-            glm::mat4 getObjectTransform();
-            POINT getWorldOrigin() { return origin; }//!< returns the object origin in world space
-            VECTOR getWorldOrientation() { return orientation; }
+            public:
+                void setWorldTransform(glm::mat4 const& transform);
+                glm::mat4 getWorldTransform() { return toWorldSpaceTMat; } //!< returns the value of the world transform matrix
+                glm::mat4 getObjectTransform();
+                POINT getWorldOrigin() { return origin; }//!< returns the object origin in world space
+                VECTOR getWorldOrientation() { return orientation; }
 
-            virtual POINT sample(float u, float v) { return point(0, 0, 0); } //!<returns the cartesian coordinate of the surface at the specificed u,v coordinate
-            virtual POINT sample(glm::vec2 uv) { return point(0, 0, 0) ;}
+                virtual POINT sample(float u, float v) { return point(0, 0, 0); } //!<returns the cartesian coordinate of the surface at the specificed u,v coordinate
+                virtual POINT sample(glm::vec2 uv) { return point(0, 0, 0); }
 
-            virtual VECTOR normal(float u, float v) { return vector(0, 0, 0) ;} //!< returns the unit normal vector of the sphere at coordinate u,v
-            virtual VECTOR normal(glm::vec2 uv) { return vector(0, 0, 0) ;}
+                virtual VECTOR normal(float u, float v) { return vector(0, 0, 0); } //!< returns the unit normal vector of the sphere at coordinate u,v
+                virtual VECTOR normal(glm::vec2 uv) { return vector(0, 0, 0); }
 
-            virtual VECTOR tangent(float u, float v) { return vector(0, 0, 0) ;} //!< returns the unit tangent bector of the sphere at coordinate u,v
-            virtual VECTOR tangent(glm::vec2 uv) { return vector(0, 0, 0) ;}
+                virtual VECTOR tangent(float u, float v) { return vector(0, 0, 0); } //!< returns the unit tangent bector of the sphere at coordinate u,v
+                virtual VECTOR tangent(glm::vec2 uv) { return vector(0, 0, 0); }
 
-            /**
-            * /brief find the intersections between the surface and the ray
-            *   The returned value is the number of intersections, each intersection will be inserted into the intersections array passed as an argument
-            *
-            */
-            virtual int findIntersections(Ray ray, Intersection* intersections) { return 0 ;}
-        };
+                /**
+                * /brief find the intersections between the surface and the ray
+                *   The returned value is the number of intersections, each intersection will be inserted into the intersections array passed as an argument
+                *
+                */
+                virtual int findIntersections(Ray ray, Intersection* intersections) { return 0; }
+        } *pUVSurface;
 
         /**
          * \class SphericalSurface

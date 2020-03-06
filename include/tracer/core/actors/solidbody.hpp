@@ -16,6 +16,7 @@ namespace tracer
         * A solid body is the base class for
         *
         */
+        typedef
         class SolidBody
         {
         protected:
@@ -23,7 +24,7 @@ namespace tracer
         public:
             std::unique_ptr<geometry::UVSurface> geometry; //!< The surface geometry of the solid body, used for intersections and transform    
             PhongMaterial getMaterial() { return material; }
-        };
+        } SolidBody,*solidBodyPtr;
 
         class UVSphere : public SolidBody
         {
