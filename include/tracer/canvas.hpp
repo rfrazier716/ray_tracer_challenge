@@ -9,39 +9,40 @@
 #include <string>
 #include <stdexcept>
 
-enum class ExportFormat { ppm, bmp }; //supported export formats
+namespace tracer {
+	enum class ExportFormat { ppm, bmp }; //supported export formats
+	class Canvas
+	{
+	private:
 
-class Canvas
-{
-private:
-	
-	COLOR* canvas; // Pointer to the canvas array that will hold all data
-	int canvasIndex(int x, int y); //returns the 1d memory offset for canvas based on row-value pair
+		COLOR* canvas; // Pointer to the canvas array that will hold all data
+		int canvasIndex(int x, int y); //returns the 1d memory offset for canvas based on row-value pair
 
-	int exportBMP(); //Exports the canvas to a bmp file
-	int exportPPM(); //Exports the canvas to a ppm file
+		int exportBMP(); //Exports the canvas to a bmp file
+		int exportPPM(); //Exports the canvas to a ppm file
 
-public:
-	const int width, height; // The dimensions of our canvas, in pixels
+	public:
+		const int width, height; // The dimensions of our canvas, in pixels
 
 
-	Canvas(int width, int height); // Class Constructor
-	~Canvas();	// Destructor
+		Canvas(int width, int height); // Class Constructor
+		~Canvas();	// Destructor
 
-	void writePixel(int row, int column, COLOR color); // function used to write a pixel to the canvas
+		void writePixel(int row, int column, COLOR color); // function used to write a pixel to the canvas
 
-	/**
-	* \brief write pixels to the canvas assuming it spans from [[-width/2,width/2],[-height/2,height/2]] with zero at the center
-	*
-	* \param x the x coordinate to write to
-	* \param y the y coordinate to write to 
-	* \param color what color value to set the pixel
-	*
-	*/
-	void writeCartesian(float x, float y, COLOR color);
-	COLOR getPixel(int row, int column); //returns color of the canvas at that pixel value
-	void blank(); //blanks the canvas to all black
-	int generateImage(ExportFormat format = ExportFormat::bmp);
-};
+		/**
+		* \brief write pixels to the canvas assuming it spans from [[-width/2,width/2],[-height/2,height/2]] with zero at the center
+		*
+		* \param x the x coordinate to write to
+		* \param y the y coordinate to write to
+		* \param color what color value to set the pixel
+		*
+		*/
+		void writeCartesian(float x, float y, COLOR color);
+		COLOR getPixel(int row, int column); //returns color of the canvas at that pixel value
+		void blank(); //blanks the canvas to all black
+		int generateImage(ExportFormat format = ExportFormat::bmp);
+	};
 
-typedef std::unique_ptr<Canvas> canvasPtr;
+	typedef std::unique_ptr<Canvas> pCanvas;
+}

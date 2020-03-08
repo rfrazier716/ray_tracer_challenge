@@ -49,7 +49,7 @@ SCENARIO("Raycasting into a vector of solidbodies")
 		std::generate_n(std::back_inserter(bodies), nSpheres, [] { return std::make_unique<actor::UVSphere>(); });
 		for (unsigned int i = 0; i < bodies.size(); i++)
 		{
-			geometry::transform(*(bodies[i]->geometry), geometry::translationMatrix(5.0f*i, 0, 0));
+			geometry::transform(*(bodies[i]->surfaceGeometry), geometry::translationMatrix(5.0f*i, 0, 0));
 		}
 		THEN("A ray cast into the bodies should return a group of hits that can be sorted by distance")
 		{
@@ -60,7 +60,7 @@ SCENARIO("Raycasting into a vector of solidbodies")
 			for (unsigned int i = 0; i < bodies.size(); i++)
 			{
 				//iterate over the bodies and fill the intersection array
-				auto numHits=bodies[i]->geometry->findIntersections(ray, bodyInterX);
+				auto numHits=bodies[i]->surfaceGeometry->findIntersections(ray, bodyInterX);
 				for (int j = 0; j < numHits; j++)
 				{
 					hits.push_back(bodyInterX[j]);

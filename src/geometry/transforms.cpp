@@ -29,11 +29,11 @@ using namespace tracer;
 
 	glm::mat4 geometry::translationMatrix(float translation)
 	{
-		return glm::mat4(
-			1.0f, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1, 0,
-			translation, translation, translation, 1);
+return glm::mat4(
+	1.0f, 0, 0, 0,
+	0, 1, 0, 0,
+	0, 0, 1, 0,
+	translation, translation, translation, 1);
 
 	}
 
@@ -111,19 +111,25 @@ using namespace tracer;
 	{
 		return  scaleMatrix * tuple;
 	}
-/*
-* These are commented out because the geometry library should be independent of the tracer core library
-	void tracer::geometry::transform(actor::Light& light, glm::mat4 const& transformMatrix)
-	{
-		geometry::transform(*(light.geometry), transformMatrix);
-	}
+	/*
+	* These are commented out because the geometry library should be independent of the tracer core library
+		void tracer::geometry::transform(actor::Light& light, glm::mat4 const& transformMatrix)
+		{
+			geometry::transform(*(light.geometry), transformMatrix);
+		}
 
-	void geometry::transform(actor::SolidBody& body, glm::mat4 const& transformMatrix)
-	{
-		geometry::transform(*(body.geometry), transformMatrix);
-	}
-*/
+		void geometry::transform(actor::SolidBody& body, glm::mat4 const& transformMatrix)
+		{
+			geometry::transform(*(body.geometry), transformMatrix);
+		}
+	*/
 	void geometry::transform(geometry::UVSurface& surface, glm::mat4 const& transformMatrix)
 	{
 		surface.setWorldTransform(transformMatrix * surface.getWorldTransform());
+	}
+
+	void geometry::transform(geometry::Ray& ray, glm::mat4 const& transformMatrix)
+	{
+		ray.position = transformMatrix * ray.position;
+		ray.direction = transformMatrix * ray.direction;
 	}

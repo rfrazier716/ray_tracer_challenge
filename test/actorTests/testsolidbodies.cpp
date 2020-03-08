@@ -24,12 +24,12 @@ SCENARIO("Creating and probing a UVSphere", "[Object]")
 		}
 		THEN("The sphere's geometry functions should be accessable")
 		{
-			REQUIRE(vectorEqual(geometry::vector(0, 0, 1.0f), sphere.geometry->normal(0, 0)));
+			REQUIRE(vectorEqual(geometry::vector(0, 0, 1.0f), sphere.surfaceGeometry->normal(0, 0)));
 		}
 		THEN("Applying a transform to the sphere properly transforms the geometry")
 		{
-			geometry::transform(*(sphere.geometry), geometry::scaleMatrix(10.0f)); //Scale the sphere by 10 in XYZ
-			REQUIRE(vectorEqual(sphere.geometry->sample(0, 0),geometry::point(0, 0, 10.0f)));
+			geometry::transform(*(sphere.surfaceGeometry), geometry::scaleMatrix(10.0f)); //Scale the sphere by 10 in XYZ
+			REQUIRE(vectorEqual(sphere.surfaceGeometry->sample(0, 0),geometry::point(0, 0, 10.0f)));
 		}
 
 	}
@@ -48,8 +48,8 @@ SCENARIO("Creating a Vectore of SolidBodyPointers")
 			auto testPassed = true;
 			for (unsigned int i = 0; i < bodies.size(); i++)
 			{
-				geometry::transform(*(bodies[i]->geometry), geometry::translationMatrix((float)i, 0, 0));
-				if (bodies[i]->geometry->getWorldOrigin()[0] != i) testPassed = false;
+				geometry::transform(*(bodies[i]->surfaceGeometry), geometry::translationMatrix((float)i, 0, 0));
+				if (bodies[i]->surfaceGeometry->getWorldOrigin()[0] != i) testPassed = false;
 			}
 		}
 	}

@@ -1,10 +1,11 @@
+#pragma once
+
 #include "glm/mat4x4.hpp"
 #include "glm/vec4.hpp"
 #include <math.h>  //for trig functions
 
 #include "tracer/geometry/primitives.hpp"
-#include "tracer/core/actors/solidbody.hpp"
-#include "tracer/core/actors/lights.hpp"
+#include "tracer/geometry/surfaces/uvsurface.hpp"
 
 namespace tracer
 {
@@ -36,5 +37,6 @@ namespace tracer
 
 		//Transform matrixes for various geometries
 		void transform(geometry::UVSurface& surface, glm::mat4 const& transformMatrix);
+		void transform(geometry::Ray& ray, glm::mat4 const& transformMatrix);
 	}
 }

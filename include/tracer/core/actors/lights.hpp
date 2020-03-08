@@ -2,10 +2,8 @@
 
 #define DEFAULT_BRIGHTNESS 200.0f
 
+#include "tracer/core/actors/actor.hpp"
 #include "tracer/colors.hpp"
-#include "tracer/geometry/primitives.hpp"
-#include "tracer/geometry/transforms.hpp"
-#include "tracer/geometry/surfaces/uvsurface.hpp"
 
 namespace tracer {
 	namespace actor
@@ -25,13 +23,12 @@ namespace tracer {
 		* Parent class for all lights
 		*
 		*/
-		class Light
+		class Light : public Actor
 		{
 		protected:
 			COLOR color;
 			float brightness;
 		public:
-			std::unique_ptr<geometry::UVSurface> geometry;
 			COLOR getColor() { return color; }
 			float getBrightness() { return brightness; }
 			/**
@@ -39,6 +36,8 @@ namespace tracer {
 			*/
 			virtual float getIntensity(const VECTOR& objectDirection) { return 0; }
 		};
+		typedef std::unique_ptr<Light> pLight;
+		typedef std::shared_ptr<Light> pSLight;
 
 		/**
 		* A point light source that radiates with equal intensity in every direction 
@@ -53,10 +52,5 @@ namespace tracer {
 				return brightness;
 			};
 		};
-	}
-	namespace geometry
-	{
-		void transform(actor::Light& light, glm::mat4 const& transformMatrix); //!< Transform function for a light object
-		//Defined here to separate geometry library dependence on actor library
 	}
 }

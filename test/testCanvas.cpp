@@ -5,7 +5,7 @@
 #include "tracer/colors.hpp"
 
 
-
+using namespace tracer;
 SCENARIO("Creating a Canvas", "[canvas]")
 {
     GIVEN("Create a new canvas with width of 10 and height of 20")

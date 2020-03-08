@@ -2,6 +2,7 @@
 
 #include <sstream> //this is used by the helper functions so not defined in the header
 
+using namespace tracer;
 //Helper functions
 glm::uvec3 uint8Color(COLOR &floatColor)
 {
