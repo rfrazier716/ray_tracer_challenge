@@ -17,8 +17,9 @@ namespace tracer
         */
         class UVSurface {
         private:
-            POINT origin = point(0, 0, 0);
-            VECTOR orientation = vector(0, 0, 1);
+            POINT origin = point(0, 0, 0); //!< The origin of the object (where it is) in world space
+            VECTOR orientation = vector(0, 0, 1); //!< The orientation of the object (which ways' up) in world space
+            VECTOR direction = vector(1, 0, 0); //!< The direction of the object (where it's facing) in world space
         protected:
             //Protected variables that the inherited classes will use
             glm::mat4 toWorldSpaceTMat = glm::mat4(1.0); //!< The transform matrix from object space to world space
@@ -35,6 +36,7 @@ namespace tracer
             glm::mat4 getObjectTransform();
             POINT getWorldOrigin() { return origin; }//!< returns the object origin in world space
             VECTOR getWorldOrientation() { return orientation; }
+            VECTOR getWorldDirection() { return direction; }
 
             virtual POINT sample(float u, float v) { return point(0, 0, 0); } //!<returns the cartesian coordinate of the surface at the specificed u,v coordinate
             virtual POINT sample(glm::vec2 uv) { return point(0, 0, 0); }

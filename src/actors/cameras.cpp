@@ -2,12 +2,9 @@
 
 using namespace tracer;
 
-geometry::Ray tracer::actor::OrthoCamera::getRay(int xPx, int yPx, int renderWidth, int renderHeight)
+geometry::Ray tracer::actor::OrthoCamera::getRay(float xPct, float yPct)
 {
-	float rayOffsetX = width * (xPx / renderWidth - 0.5f);
-	float rayOffsetY = width * renderHeight/renderWidth * (yPx / renderHeight- 0.5f);
-	auto ray = geometry::Ray{ geometry::point(rayOffsetX,rayOffsetY,0),geometry::vector(0,0,1.0f) };
-	geometry::transform(ray, surfaceGeometry->getWorldTransform());
-	return ray;
+	auto rayOrigin=surfaceGeometry->getWorldTransform() * geometry::point(0, (xPct - 0.5) * orthoWidth, (0.5-yPct) * orthoWidth*aspectRatio);
+	return geometry::Ray{rayOrigin,surfaceGeometry->getWorldTransform() * X_AXIS};
 }
 

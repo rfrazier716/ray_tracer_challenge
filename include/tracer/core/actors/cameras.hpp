@@ -8,12 +8,16 @@ namespace tracer {
 		class Camera : public Actor
 		{
 		protected:
-			const float width;
+			float aspectRatio=1.0; //!< Aspect Ratio is the ratio of height to width 
 		public:
-			virtual geometry::Ray getRay(int xPx, int yPx, int renderWidth, int renderHeight){return geometry::Ray{};}
+			void setAspectRatio(float ratio) { aspectRatio = ratio; }
+			float getAspectRatio() { return aspectRatio; }
+
+			virtual geometry::Ray getRay(float xPct,float yPct){return geometry::Ray{};}
 			virtual geometry::Ray getRandomRay(){return geometry::Ray{};}
 
-			Camera(float camWidth=1.0f) : width(camWidth) 
+
+			Camera()
 			{
 				//Cameras have a point source as their surface
 				surfaceGeometry = std::make_unique<geometry::PointSurface>();
@@ -27,9 +31,14 @@ namespace tracer {
 		*/
 		class OrthoCamera : public Camera
 		{
+		private:
+			float orthoWidth;
 		public:
-			geometry::Ray getRay(int xPx, int yPx, int renderWidth, int renderHeight);
-			OrthoCamera(float camWidth) : Camera(camWidth) {}
+			geometry::Ray getRay(float xPct, float yPct);
+			OrthoCamera(float camWidth)
+			{
+				orthoWidth = camWidth;
+			}
 		};
 
 	}

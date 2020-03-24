@@ -17,10 +17,16 @@ namespace tracer {
 			}
 			void setRendered(bool isRendered) { rendered = isRendered; } //!< Sets whether or not the actor is rendered
 		};
+		typedef std::shared_ptr<Actor> pSActor;
 	}
+
+	
+
 	namespace geometry
 	{
-		void transform(actor::Actor& actor, glm::mat4 const& transformMatrix); //!< Transform function for a light object
+		void transform(actor::Actor& actor, glm::mat4 const& transformMatrix); //!< Transform function for an actor object
+		void move(actor::Actor& actor, float dx=0.0f, float dy=0.0f, float dz=0.0f);
+		void moveAbs(actor::Actor& actor, float x = 0.0f, float y = 0.0f, float z = 0.0f);
 		//Defined here to separate geometry library dependence on actor library
 	}
 }

@@ -8,6 +8,7 @@ void geometry::UVSurface::setWorldTransform(glm::mat4 const& transform) //!< set
     toWorldSpaceTMat = transform;
 	origin = toWorldSpaceTMat * geometry::point(0, 0, 0);
 	orientation = glm::normalize(toWorldSpaceTMat * geometry::vector(0, 0, 1.0f));
+	direction = glm::normalize(toWorldSpaceTMat * geometry::vector(1.0f, 0, 0));
     updateInverseTransform = true; //setter to tell object that it needs to modify it's inverse matrix
 }
 
